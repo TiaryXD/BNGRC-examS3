@@ -18,8 +18,9 @@ class BesoinController
 
         $besoins = $repo->get_besoin();
 
-        $app->render('dashboard/besoin', [
+        $app->render('dashboard/layout', [
             'besoins' => $besoins,
+            'page' => 'besoin',
             'title'   => 'Liste des besoins'
         ]);
     }
@@ -46,11 +47,12 @@ class BesoinController
         $villeRepo = new VilleRepository($app->getPDO());
         $typeRepo  = new TypeRepository($app->getPDO());
 
-        $app->render('dashboard/create', [
+        $app->render('dashboard/layout', [
             'villes' => $villeRepo->get_ville(),
             'types'  => $typeRepo->get_type(),
             'errors' => [],
             'values' => [],
+            'page' => 'besoin',
             'title'  => 'Ajouter un besoin'
         ]);
     }
@@ -81,11 +83,12 @@ class BesoinController
             $villeRepo = new VilleRepository($app->getPDO());
             $typeRepo  = new TypeRepository($app->getPDO());
 
-            $app->render('dashboard/create', [
+            $app->render('dashboard/layout', [
                 'errors' => $errors,
                 'values' => $_POST,
                 'villes' => $villeRepo->get_ville(),
                 'types'  => $typeRepo->get_type(),
+                'page' => 'besoin',
                 'title'  => 'Ajouter un besoin'
             ]);
             return;
