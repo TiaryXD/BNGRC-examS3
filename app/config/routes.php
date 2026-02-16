@@ -1,6 +1,5 @@
 <?php
 
-use app\controllers\DonController;
 use app\middlewares\SecurityHeadersMiddleware;
 use flight\Engine;
 use flight\net\Router;
@@ -8,7 +7,7 @@ use flight\net\Router;
 use app\controllers\AuthController;
 use app\controllers\HomeController;
 use app\controllers\BesoinController;
-
+use app\controllers\DonController;
 
 
 /** 
@@ -75,6 +74,13 @@ $router->group('', function(Router $router) use ($app) {
     });
     $router->post('/save-besoin', function() use ($app) {
         BesoinController::saveBesoinbyidville($app);
+    });
+
+    $router->get('/ajout-don', function() use ($app) {
+        DonController::createdon($app);
+    });
+    $router->post('/save-besoin', function() use ($app) {
+        DonController::savedon($app);
     });
 
 }, [ SecurityHeadersMiddleware::class ]);
