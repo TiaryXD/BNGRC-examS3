@@ -43,21 +43,21 @@ class DonRepository
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-public function get_historique()
-{
-    $sql = "SELECT d.id,
-                   d.description,
-                   d.quantite,
-                   d.unite,
-                   d.date_reception,
-                   d.source,
-                   d.created_at,
-                   t.nom AS type_nom
-            FROM dons d
-            JOIN types t ON d.type_id = t.id 
-            ORDER BY d.created_at DESC";
+    public function get_historique()
+    {
+        $sql = "SELECT d.id,
+                    d.description,
+                    d.quantite,
+                    d.unite,
+                    d.date_reception,
+                    d.source,
+                    d.created_at,
+                    t.nom AS type_nom
+                FROM dons d
+                JOIN types t ON d.type_id = t.id 
+                ORDER BY d.created_at DESC";
 
-    return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-}
+        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }
