@@ -1,0 +1,116 @@
+Finaritra 2804 - Brandy 4201 - Tiary 4254
+
+☐ Front-end Brandy 4201
+    thème : orange, blanc et noir
+    methode : bootstrap
+    ☐ - layout général
+        ☐ - navbar
+            ☐ - logo BNGRC
+            ☐ - lien accueil
+            ☐ - lien à propos
+            ☐ - lien contact
+            ☐ - lien se connecter
+                ☐ - invalid si connecté
+                ☐ - valid si pas connecté
+            ☐ - lien se deconnecter
+                ☐ - valid si connecté
+                ☐ - invalid si pas connecté
+        
+        ☐ - footer
+            ☐ - liste contact
+            ☐ - liste réseaux sociaux
+            ☐ - liste ETU groupe
+    
+    ☐ - page d'accueil general
+        ☐ - main
+            ☐ - section d'accueil
+                ☐ - titre
+                ☐ - description
+                ☐ - image
+                ☐ - si connecté 
+                    ☐ - admin
+                        ☐ - bouton gérer les dons 
+            ☐ - section voir les besoins
+                ☐ - titre
+                ☐ - description
+                ☐ - image
+                ☐ - bouton voir les besoins
+            ☐ - section voir les villes sinistrés
+                ☐ - titre
+                ☐ - description
+                ☐ - image
+                ☐ - bouton voir les villes sinistrés
+            ☐ - section inserer un don
+                ☐ - titre
+                ☐ - description
+                ☐ - image
+                ☐ - bouton inserer un don
+            ☐ - section à propos
+                ☐ - titre
+                ☐ - description
+                ☐ - image
+    
+    ☐ - page liste des besoins
+        ☐ - main
+            ☐ - titre
+            ☐ - description
+            ☐ - image
+            ☐ - liste des besoins (card)
+                ☐ - titre du besoin
+                ☐ - description du besoin
+                ☐ - ville sinistré associée
+                ☐ - chiffre du besoin total des villes (ex: 1000 litres d'eau)
+    
+    ☐ - page liste des villes sinistrés
+        ☐ - main
+            ☐ - titre
+            ☐ - description
+            ☐ - image
+            ☐ - liste des villes sinistrés (card ngeza)
+                ☐ - nom de la ville
+                ☐ - image de la ville
+                ☐ - bouton voir les besoins associés 
+
+        ☐ - detail d'une ville sinistré
+            ☐ - titre
+            ☐ - description
+            ☐ - image
+            ☐ - liste des besoins associés (card)
+                ☐ - titre du besoin
+                ☐ - description du besoin
+                ☐ - chiffre du besoin (ex: 1000 litres d'eau)
+    
+    ☐ - page login admin
+        ☐ - main
+            ☐ - titre
+            ☐ - image
+            ☐ - formulaire de connexion
+                ☐ - champ email
+                ☐ - champ mot de passe
+                ☐ - bouton se connecter
+
+    ☐ - page gestion des dons (admin)
+        ☐ - main
+            ☐ - titre
+            ☐ - description
+            ☐ - image
+            ☐ - liste des besoins (card)
+                ☐ - titre du besoin associé
+                ☐ - chiffre du don total (ex: 500 litres d'eau)
+                ☐ - formulaire de distribution
+                    ☐ - liste deroulante des villes sinistrés
+                    ☐ - champ chiffre du don à distribuer
+                    ☐ - bouton distribuer le don
+
+☐ Back-end Finaritra 2801 - Tiary 4254
+    ☐ - traitement de la connexion admin
+        ☐ - validation des champs
+        ☐ - vérification des identifiants
+        ☐ - gestion de la session admin
+    
+    ☐ - traitement de la connexion donneur
+        ☐ - validation du champ email
+        ☐ - vérification de l'email dans la base de données
+        ☐ - gestion de la session donneur
+    
+    ☐ - gestion des besoins
