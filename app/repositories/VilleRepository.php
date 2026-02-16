@@ -4,8 +4,7 @@ namespace app\repositories;
 
 use PDO;
 
-class VilleRepository
-{
+class VilleRepository {
     private PDO $pdo;
 
     public function __construct(PDO $pdo)

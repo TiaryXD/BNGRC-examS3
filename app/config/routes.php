@@ -54,7 +54,10 @@ $router->group('', function(Router $router) use ($app) {
         Flight::render('error/404');
     });
 
-
+    $router->get('/ville', function() use ($app) {
+        BesoinController::showVille($app);
+    });
+    
 
 	
 }, [ SecurityHeadersMiddleware::class ]);
