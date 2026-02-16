@@ -41,8 +41,8 @@ class BesoinController
     /* Afficher le formulaire */
     public function createBesoin()
     {
-        $villes = $this->villeRepository->findAllWithRegion();
-        $types  = $this->typeRepository->findAll();
+        $villes = $this->villeRepository->get_ville();
+        $types  = $this->typeRepository->get_type();
 
         require __DIR__ . '/../views/besoins/create.php';
     }
