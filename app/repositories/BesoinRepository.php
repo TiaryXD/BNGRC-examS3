@@ -13,11 +13,11 @@ class BesoinRepository
         $this->pdo = $pdo;
     }
 
-    public function insert_besoin($villeId, $typeId, $description, $quantite, $unite, $remarque = null)
+    public function insert_besoin($villeId, $typeId, $description, $quantite, $unite, $remarque = null, $prixUnitaire = null)
     {
         $sql = "INSERT INTO besoins
-                (ville_id, type_id, description, quantite, unite, remarque)
-                VALUES (?,?,?,?,?,?)";
+                (ville_id, type_id, description, quantite, unite, remarque, prix_unitaire)
+                VALUES (?,?,?,?,?,?,?)";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
@@ -26,11 +26,13 @@ class BesoinRepository
             $description,
             $quantite,
             $unite,
-            $remarque
+            $remarque,
+            $prixUnitaire
         ]);
 
         return $this->pdo->lastInsertId();
     }
+
 
     public function get_besoin()
     {

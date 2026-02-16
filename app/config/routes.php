@@ -65,7 +65,7 @@ $router->group('', function(Router $router) use ($app) {
         BesoinController::showVilleById($app, $id);
     });
 
-        $router->get('/dons', function() use ($app) {
+    $router->get('/dons', function() use ($app) {
         DonController::historique($app);
     });
     
@@ -86,7 +86,5 @@ $router->group('', function(Router $router) use ($app) {
     $router->get('/stat-don', function() use ($app) {
         StatDonController::getstatdon($app);
     });
-
-
 
 }, [ SecurityHeadersMiddleware::class ]);

@@ -166,3 +166,6 @@ JOIN besoins b ON di.besoin_id = b.id
 JOIN villes v  ON b.ville_id = v.id
 JOIN types t   ON b.type_id = t.id
 JOIN dons d    ON di.don_id = d.id;
+
+ALTER TABLE besoins 
+ADD prix_unitaire DECIMAL(12,2) DEFAULT NULL;
