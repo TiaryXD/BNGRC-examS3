@@ -83,30 +83,16 @@
 
     <section class="section-padding">
         <div class="container">
-            <div class="row">
+            <div class="row justify-content-center">
 
                 <div class="col-lg-10 col-12 text-center mx-auto">
                     <h2 class="mb-5">Plateforme Nationale de Gestion des Urgences</h2>
                 </div>
 
-                <!-- BESOIN -->
-                <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
-                    <div class="featured-block d-flex justify-content-center align-items-center">
-                        <a href="/besoins" class="d-block text-center">
-                            <img src="/assets/images/icons/hands.png"
-                                class="featured-block-image img-fluid" alt="Besoins">
-
-                            <p class="featured-block-text">
-                                Suivre les <strong>Besoins</strong>
-                            </p>
-                        </a>
-                    </div>
-                </div>
-
                 <!-- VILLES -->
                 <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0 mb-md-4">
                     <div class="featured-block d-flex justify-content-center align-items-center">
-                        <a href="/villes" class="d-block text-center">
+                        <a href="/ville" class="d-block text-center">
                             <img src="/assets/images/icons/heart.png"
                                 class="featured-block-image img-fluid" alt="Villes sinistrées">
 
@@ -126,20 +112,6 @@
 
                             <p class="featured-block-text">
                                 Gérer les <strong>Dons</strong>
-                            </p>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- COORDINATION -->
-                <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
-                    <div class="featured-block d-flex justify-content-center align-items-center">
-                        <a href="/accueil" class="d-block text-center">
-                            <img src="/assets/images/icons/scholarship.png"
-                                class="featured-block-image img-fluid" alt="Coordination">
-
-                            <p class="featured-block-text">
-                                <strong>Distribution</strong> des dons
                             </p>
                         </a>
                     </div>
