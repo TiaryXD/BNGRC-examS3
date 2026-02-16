@@ -6,6 +6,7 @@ use flight\net\Router;
 
 use app\controllers\AuthController;
 use app\controllers\HomeController;
+use app\controllers\BesoinController;
 
 /** 
  * @var Router $router 
@@ -54,7 +55,10 @@ $router->group('', function(Router $router) use ($app) {
         Flight::render('error/404');
     });
 
-
+    $router->get('/ville', function() use ($app) {
+        BesoinController::showVille($app);
+    });
+    
 
 	
 }, [ SecurityHeadersMiddleware::class ]);
