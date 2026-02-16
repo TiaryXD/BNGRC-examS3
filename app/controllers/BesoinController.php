@@ -23,6 +23,19 @@ class BesoinController
         ]);
     }
 
+        public static function showVille($app)
+    {
+        $repo = new VilleRepository($app->getPDO());
+
+        $villes = $repo->get_ville();
+
+        $app->render('dashboard/ville', [
+            'ville' => $villes,
+            'title'   => 'Liste des villes'
+        ]);
+    }
+
+
     /**
      * Afficher formulaire création
      */
