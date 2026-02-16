@@ -137,3 +137,5 @@ INSERT INTO distributions (besoin_id, don_id, quantite, remarque, created_by, da
 (4, 2, 1800.00,  'Priorité Toamasina',          1, '2025-02-07 10:45:00'),   -- riz vers Toamasina
 (5, 4,  180.00,  '150 tôles livrées',           1, '2025-02-08 11:20:00'),   -- tôles vers Toamasina
 (3, 6, 15000000.00, 'Virement 15M Ar',       1, '2025-02-09 15:00:00');   -- argent vers Antananarivo
+
+DELETE FROM villes WHERE nom IN ('Ambohidratrimo');
