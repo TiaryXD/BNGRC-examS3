@@ -43,4 +43,18 @@ class DistributionRepository
 
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getDistributionsByVilleId(int $villeId)
+    {
+        $sql = "SELECT *
+                FROM v_distributions_ville
+                WHERE ville_id = :villeId
+                ORDER BY distribution_date DESC";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['villeId' => $villeId]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

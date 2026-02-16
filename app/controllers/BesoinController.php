@@ -45,14 +45,17 @@ class BesoinController
         $ville = $repo->getVilleById((int)$id);
         $repo = new BesoinRepository($app->db());
         $besoins = $repo->getbesoinbyidville((int)$id);
+        $repo = new DistributionRepository($app->db());
+        $distribution = $repo->getDistributionsByVilleId((int)$id);
+
         $app->render('dashboard/layout', [
             'ville' => $ville,
             'besoin'=> $besoins,
+            'distribution' => $distribution,
             'page'  => 'ville-detail',
             'title' => 'Détail de la ville'
         ]);
     }
-
 
     /**
      * Afficher formulaire création

@@ -2,37 +2,37 @@ CREATE DATABASE BNGRC;
 USE BNGRC;
 CREATE TABLE admin (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(100) NOT NULL
+    username VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL
 );
 
 -- 2. Régions (optionnel mais utile si on veut regrouper les villes)
 CREATE TABLE regions (
-    id          TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id          TINYINT AUTO_INCREMENT PRIMARY KEY,
     nom         VARCHAR(100) NOT NULL UNIQUE     -- ex: Analamanga, Atsinanana, Diana...
     );
 
 -- 3. Villes / Communes (les sinistrés sont regroupés par ville)
 CREATE TABLE villes (
-    id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id          INT AUTO_INCREMENT PRIMARY KEY,
     nom         VARCHAR(150) NOT NULL,
-    region_id   TINYINT UNSIGNED DEFAULT NULL,
+    region_id   TINYINT DEFAULT NULL,
     population  INT DEFAULT NULL,                   -- estimation, pour info
     FOREIGN KEY (region_id) REFERENCES regions(id) ON DELETE SET NULL
 );
 
 -- 4. Types de dons / besoins (très recommandé)
 CREATE TABLE types (
-    id          TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id          TINYINT AUTO_INCREMENT PRIMARY KEY,
     nom         VARCHAR(50) NOT NULL UNIQUE      -- Nature, Matériaux, Argent
 );
 
 -- 5. Besoins exprimés par ville
 CREATE TABLE besoins (
-    id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    ville_id        INT UNSIGNED NOT NULL,
-    type_id         TINYINT UNSIGNED NOT NULL,
+    id              INT AUTO_INCREMENT PRIMARY KEY,
+    ville_id        INT NOT NULL,
+    type_id         TINYINT NOT NULL,
     description    VARCHAR(255) NOT NULL,               -- ex: "Riz blanc", "Tôle ondulée 3m", "Aide financière urgente"
     quantite        DECIMAL(12,2) NOT NULL DEFAULT 0,
     unite           VARCHAR(50) NOT NULL,                -- kg, litre, pièce, m², Ar, sac de 50kg...
@@ -44,8 +44,8 @@ CREATE TABLE besoins (
 
 -- 6. Dons reçus (stock disponible)
 CREATE TABLE dons (
-    id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    type_id         TINYINT UNSIGNED NOT NULL,
+    id              INT AUTO_INCREMENT PRIMARY KEY,
+    type_id         TINYINT NOT NULL,
     description     VARCHAR(255) NOT NULL,              
     quantite        DECIMAL(12,2) NOT NULL DEFAULT 0,
     unite           VARCHAR(50) NOT NULL,
@@ -58,9 +58,9 @@ CREATE TABLE dons (
 
 -- 7. Table de liaison : attribution d'un don à un besoin
 CREATE TABLE distributions (
-    id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    besoin_id       INT UNSIGNED NOT NULL,
-    don_id          INT UNSIGNED NOT NULL,
+    id              INT AUTO_INCREMENT PRIMARY KEY,
+    besoin_id       INT NOT NULL,
+    don_id          INT NOT NULL,
     quantite        DECIMAL(12,2) NOT NULL,
     remarque        TEXT DEFAULT NULL,
     created_by      INT DEFAULT NULL,
@@ -68,7 +68,6 @@ CREATE TABLE distributions (
     FOREIGN KEY (besoin_id)  REFERENCES besoins(id)  ON DELETE CASCADE,
     FOREIGN KEY (don_id)     REFERENCES dons(id)     ON DELETE RESTRICT,
     FOREIGN KEY (created_by) REFERENCES admin(id)    ON DELETE SET NULL
-
 );
 -- 1. Régions (quelques régions concernées par des catastrophes récentes ou fréquentes)
 INSERT INTO regions (nom) VALUES
@@ -139,3 +138,31 @@ INSERT INTO distributions (besoin_id, don_id, quantite, remarque, created_by, da
 (3, 6, 15000000.00, 'Virement 15M Ar',       1, '2025-02-09 15:00:00');   -- argent vers Antananarivo
 
 DELETE FROM villes WHERE nom IN ('Ambohidratrimo');
+
+CREATE OR REPLACE VIEW v_distributions_ville AS
+SELECT
+    di.id                AS distribution_id,
+    di.quantite          AS distribution_quantite,
+    di.remarque          AS distribution_remarque,
+    di.created_by        AS distribution_created_by,
+    di.date_distribution AS distribution_date,
+
+    v.id                 AS ville_id,
+    v.nom                AS ville_nom,
+
+    b.id                 AS besoin_id,
+    b.description        AS besoin_description,
+    b.unite              AS besoin_unite,
+    b.type_id            AS besoin_type_id,
+
+    d.id                 AS don_id,
+    d.description        AS don_description,
+    d.unite              AS don_unite,
+
+    t.nom                AS type_nom
+
+FROM distributions di
+JOIN besoins b ON di.besoin_id = b.id
+JOIN villes v  ON b.ville_id = v.id
+JOIN types t   ON b.type_id = t.id
+JOIN dons d    ON di.don_id = d.id;
