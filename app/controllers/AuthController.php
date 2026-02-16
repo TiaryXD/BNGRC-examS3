@@ -2,69 +2,90 @@
 
 namespace app\controllers;
 
-use app\repositories\UserRepository;
+use app\repositories\BesoinRepository;
+use app\repositories\VilleRepository;
+use app\repositories\TypeRepository;
 
-use app\services\AuthService;
-use app\services\UserService;
-use Flight;
-
-class AuthController
+class BesoinController
 {
-    public static function showLogin($app)
+    /**
+     * Afficher la liste des besoins
+     */
+    public static function showBesoin($app)
     {
-        $app->render('auth/layout', [
-            'values' => ['email' => ''],
-            'errors' => ['email' => '', 'password' => ''],
-            'page' => 'login',
-            'title' => 'Connexion',
-            'success' => false
+        $repo = new BesoinRepository($app->getPDO());
+
+        $besoins = $repo->get_besoin();
+
+        $app->render('dashboard/besoin', [
+            'besoins' => $besoins,
+            'title'   => 'Liste des besoins'
         ]);
     }
 
-    public static function validateLoginAjax($app) {
-        header('Content-Type: application/json');
-        $repo = new UserRepository($app->db());
+    /**
+     * Afficher formulaire création
+     */
+    public static function showCreate($app)
+    {
+        $villeRepo = new VilleRepository($app->getPDO());
+        $typeRepo  = new TypeRepository($app->getPDO());
 
-        $input = Flight::request()->data->getData();
-
-        $res = AuthService::validateAuth($input, $repo);
-        Flight::json($res);
+        $app->render('dashboard/create', [
+            'villes' => $villeRepo->get_ville(),
+            'types'  => $typeRepo->get_type(),
+            'errors' => [],
+            'values' => [],
+            'title'  => 'Ajouter un besoin'
+        ]);
     }
 
-    public static function postLogin($app) {
-        $pdo = $app->db();
-        $repo = new UserRepository($pdo);
+    /**
+     * Enregistrer un besoin
+     */
+    public static function store($app)
+    {
+        $repo = new BesoinRepository($app->getPDO());
 
-        $input = Flight::request()->data->getData();
+        $villeId     = $_POST['ville_id'] ?? null;
+        $typeId      = $_POST['type_id'] ?? null;
+        $description = trim($_POST['description'] ?? '');
+        $quantite    = (float) ($_POST['quantite'] ?? 0);
+        $unite       = trim($_POST['unite'] ?? '');
+        $remarque    = trim($_POST['remarque'] ?? '');
 
-        $res = AuthService::validateAuth($input, $repo);
+        $errors = [];
 
-        if ($res['ok']) {
-            $email = $res['values']['email'];
+        if (!$villeId)     $errors['ville_id'] = "Ville obligatoire";
+        if (!$typeId)      $errors['type_id'] = "Type obligatoire";
+        if (!$description) $errors['description'] = "Description obligatoire";
+        if ($quantite <= 0) $errors['quantite'] = "Quantité invalide";
+        if (!$unite)       $errors['unite'] = "Unité obligatoire";
 
-            if (!$repo->emailExists($email)) {
-                $svc = new UserService($repo);
-                $svc->register($res['values'], $input['password']);
-            }
+        if (!empty($errors)) {
+            $villeRepo = new VilleRepository($app->getPDO());
+            $typeRepo  = new TypeRepository($app->getPDO());
 
-            $_SESSION['user'] = $repo->getUserByMail($email);
-
-            Flight::redirect('/accueil');
-
+            $app->render('dashboard/create', [
+                'errors' => $errors,
+                'values' => $_POST,
+                'villes' => $villeRepo->get_ville(),
+                'types'  => $typeRepo->get_type(),
+                'title'  => 'Ajouter un besoin'
+            ]);
             return;
         }
 
-        $app->render('auth/layout', [
-            'values' => ['email' => $input['email']],
-            'errors' => $res['errors'],
-            'page' => 'login',
-            'success' => false
-        ]);
-    }
+        $repo->insert_besoin(
+            $villeId,
+            $typeId,
+            $description,
+            $quantite,
+            $unite,
+            $remarque ?: null
+        );
 
-    public static function logout()
-    {
-        session_destroy();
-        Flight::redirect('/login');
+        header("Location: /dashboard/besoin");
+        exit;
     }
 }
