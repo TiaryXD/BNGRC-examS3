@@ -32,4 +32,17 @@ class VilleRepository {
 
         return $this->pdo->lastInsertId();
     }
+
+    public function getVilleById(int $id)
+    {
+        $sql = "SELECT v.*, r.nom as region_nom
+                FROM villes v
+                LEFT JOIN regions r ON v.region_id = r.id
+                WHERE v.id = :id";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['id' => $id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
