@@ -42,7 +42,7 @@ $totalDemande = count($besoin);
         </div>
 
 
-        <div class="row mb-4">
+        <div class="row mb-4 justify-content-center">
             <div class="col-md-4">
                 <div class="custom-block p-3 text-center">
                     <small class="text-muted">Total besoins</small>
@@ -176,5 +176,19 @@ $totalDemande = count($besoin);
         </div>
 
     <?php endif; ?>
+
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+
+            <a href="/besoin/create?ville_id=<?= (int)$ville['id'] ?>"
+            class="custom-btn btn btn-warning px-4 py-2">
+
+                <i class="bi-plus-circle me-2"></i>
+                Ajouter un besoin pour cette ville
+
+            </a>
+
+        </div>
+    </div>
     </div>
 </section>
