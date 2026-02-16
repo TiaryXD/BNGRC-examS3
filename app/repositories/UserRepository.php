@@ -17,7 +17,7 @@ class UserRepository
     public function emailExists($email)
     {
         $query = "SELECT 1 
-				  FROM user 
+				  FROM admin 
 				  WHERE email = ? 
 				  LIMIT 1";
 
@@ -30,7 +30,7 @@ class UserRepository
 
     public function create($email, $hash)
     {
-        $query = "INSERT INTO user(email, password)
+        $query = "INSERT INTO admin(email, password)
       			  VALUES(?,?)";
 
         $st = $this->pdo->prepare($query);
@@ -46,7 +46,7 @@ class UserRepository
     public function validateCredentials($email, $password)
     {
         $query = "SELECT password
-                  FROM user 
+                  FROM admin 
                   WHERE email = ?";
 
         $stmt = $this->pdo->prepare($query);
@@ -61,7 +61,7 @@ class UserRepository
     public function getUserByMail($email)
     {
         $query = "SELECT id, email
-                  FROM user 
+                  FROM admin 
                   WHERE email = ?";
 
         $stmt = $this->pdo->prepare($query);
@@ -75,7 +75,7 @@ class UserRepository
     public function getUserById($id)
     {
         $query = "SELECT id, email
-                  FROM user 
+                  FROM admin 
                   WHERE id = ?";
 
         $stmt = $this->pdo->prepare($query);
@@ -85,4 +85,6 @@ class UserRepository
 
         return $row ?? null;
     }
+
+
 }
