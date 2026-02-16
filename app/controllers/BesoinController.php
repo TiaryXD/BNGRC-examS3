@@ -44,10 +44,10 @@ class BesoinController
         $repo = new VilleRepository($app->db());
 
         $ville = $repo->getVilleById((int)$id);
-        $repo = new BesoinRepository($app->db());
-        $besoins = $repo->getbesoinbyidville((int)$id);
         $repo = new DistributionRepository($app->db());
         $distribution = $repo->getDistributionsByVilleId((int)$id);
+        $besoinRepo = new BesoinRepository($app->db());
+        $besoins = $besoinRepo->getBesoinsAvecResteByVille((int)$id);
 
         $app->render('dashboard/layout', [
             'ville' => $ville,

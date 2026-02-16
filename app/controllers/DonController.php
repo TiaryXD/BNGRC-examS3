@@ -6,6 +6,7 @@ use app\repositories\DonRepository;
 use app\repositories\TypeRepository;
 use app\repositories\VilleRepository;
 use app\repositories\BesoinRepository;
+use app\repositories\DistributionRepository;
 use Flight;
 
 class DonController
@@ -162,7 +163,6 @@ class DonController
         $donNom  = trim($_POST['don_nom'] ?? '');
         $unite   = trim($_POST['unite'] ?? '');
         $villeId = (int)($_POST['ville_id'] ?? 0);
-        $besoinId = (int)($_POST['besoin_id'] ?? 0);
         $quantite = (float)($_POST['quantite'] ?? 0);
         $remarque = trim($_POST['remarque'] ?? '');
 
@@ -171,12 +171,9 @@ class DonController
         if ($donNom === '') $errors['don_nom'] = "Don obligatoire";
         if ($unite === '') $errors['unite'] = "Unité obligatoire";
         if ($villeId <= 0) $errors['ville_id'] = "Ville obligatoire";
-        if ($besoinId <= 0) $errors['besoin_id'] = "Besoin obligatoire";
         if ($quantite <= 0) $errors['quantite'] = "Quantité invalide";
 
         $donRepo = new DonRepository($app->db());
-        $typeRepo = new TypeRepository($app->db());
-        $typeId  = $typeRepo->getTypeIdForDon($donNom);
         $resteStock = $donRepo->getRestePourDon($donNom, $unite);
 
         if ($quantite > $resteStock) {
@@ -184,58 +181,43 @@ class DonController
         }
 
         $besoinRepo = new BesoinRepository($app->db());
-        $besoin = $besoinRepo->getBesoinById($besoinId);
+
+        $besoin = $besoinRepo->getBesoinByVilleAndDonNom($villeId, $donNom);
 
         if (!$besoin) {
-            $errors['besoin_id'] = "Besoin introuvable";
+            $errors['ville_id'] = "Cette ville n'a pas de besoin enregistré pour : $donNom";
         } else {
-            if ((int)$besoin['ville_id'] !== $villeId) {
-                $errors['besoin_id'] = "La ville n'a pas besoin de ce don";
-            }
-
-            if ($typeId && (int)$besoin['type_id'] !== (int)$typeId) {
-                $errors['besoin_id'] = "Ce besoin ne correspond pas au type du don";
+            if ($besoin['unite'] !== $unite) {
+                $errors['quantite'] = "Unité incompatible (besoin: {$besoin['unite']}, don: $unite)";
             }
 
             $quantiteBesoin = (float)$besoin['quantite'];
-            if ($quantite > $quantiteBesoin) {
-                $errors['quantite'] = "Quantité > besoin (besoin: " . number_format($quantiteBesoin, 0, ',', ' ') . " " . $besoin['unite'] . ")";
-            }
-
-            $dejaDistribue = $besoinRepo->getTotalDistribuePourBesoin($besoinId);
-            $resteBesoin = max(0, $quantiteBesoin - $dejaDistribue);
+            $dejaDistribue  = $besoinRepo->getTotalDistribuePourBesoin((int)$besoin['id']);
+            $resteBesoin    = max(0, $quantiteBesoin - $dejaDistribue);
 
             if ($quantite > $resteBesoin) {
-                $errors['quantite'] = "Besoin déjà partiellement couvert. Reste à couvrir: "
-                    . number_format($resteBesoin, 0, ',', ' ') . " " . $besoin['unite'];
-            }
-
-            if (!empty($besoin['unite']) && $besoin['unite'] !== $unite) {
-                $errors['quantite'] = "Unité incompatible (stock: $unite, besoin: {$besoin['unite']})";
+                $errors['quantite'] = "Besoin insuffisant. Reste à couvrir: "
+                    . number_format($resteBesoin, 0, ',', ' ') . " {$besoin['unite']}";
             }
         }
 
         if (!empty($errors)) {
             $villeRepo = new VilleRepository($app->db());
-            $besoins = ($typeId && $villeId) ? $besoinRepo->getBesoinsByVilleAndType($villeId, $typeId) : [];
 
             $app->render('dashboard/layout', [
                 'page'   => 'distribuer-don',
                 'title'  => 'Distribuer un don',
-
                 'don_nom' => $donNom,
                 'unite'   => $unite,
                 'reste_stock' => $resteStock,
-                'type_id' => $typeId,
-
                 'villes'  => $villeRepo->get_ville(),
-                'besoins' => $besoins,
-
-                'errors' => $errors,
-                'values' => $_POST,
+                'errors'  => $errors,
+                'values'  => $_POST,
             ]);
             return;
         }
+
+        $besoinId = (int)$besoin['id'];
 
         $distRepo = new DistributionRepository($app->db());
         $createdBy = $_SESSION['user']['id'] ?? null;
@@ -250,6 +232,7 @@ class DonController
 
         Flight::redirect('/ville/' . $villeId);
     }
+
 
 
 

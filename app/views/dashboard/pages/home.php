@@ -117,6 +117,16 @@
                     </div>
                 </div>
 
+                <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
+                    <div class="featured-block d-flex justify-content-center align-items-center">
+                        <a href="/stat-don" class="d-block">
+                            <img src="/assets/images/icons/scholarship.png" class="featured-block-image img-fluid" alt="">
+
+                            <p class="featured-block-text"><strong>Statistiques</strong> des dons</p>
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>

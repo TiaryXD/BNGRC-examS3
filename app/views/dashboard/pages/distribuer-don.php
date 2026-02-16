@@ -8,6 +8,8 @@ $besoins = $besoins ?? [];
 $errors = $errors ?? [];
 $values = $values ?? [];
 
+var_dump($errors);
+
 function invalid($k, $errors){ return !empty($errors[$k]) ? 'is-invalid' : ''; }
 
 $selectedVille = $values['ville_id'] ?? '';
@@ -25,6 +27,10 @@ $selectedBesoin = $values['besoin_id'] ?? '';
             <h2 class="mb-2">Distribuer un don</h2>
             <p class="text-muted mb-0">Stock restant : <strong><?= number_format($reste_stock, 0, ',', ' ') ?> <?= htmlspecialchars($unite) ?></strong></p>
           </div>
+
+          <?php if(!empty($errors['besoin_id'])): ?>
+            <div class="invalid-feedback d-block"><?= htmlspecialchars($errors['besoin_id']) ?></div>
+            <?php endif; ?>
 
           <form method="POST" action="/distribuer/save" class="row g-3" novalidate>
 
@@ -44,7 +50,7 @@ $selectedBesoin = $values['besoin_id'] ?? '';
             <!-- Ville -->
             <div class="col-12">
               <label class="form-label fw-semibold">Ville</label>
-              <select class="form-select <?= invalid('ville_id',$errors) ?>"
+              <select name="ville_id" class="form-select <?= invalid('ville_id',$errors) ?>"
                       onchange="window.location='<?= '/distribuer?don='.urlencode($don_nom).'&unite='.urlencode($unite) ?>&ville_id='+this.value"
                       required>
                 <option value="">-- Choisir une ville --</option>

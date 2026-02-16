@@ -97,5 +97,50 @@ class BesoinRepository
         return (float)($st->fetch(\PDO::FETCH_ASSOC)['total'] ?? 0);
     }
 
-    
+    public function getBesoinByVilleAndDonNom(int $villeId, string $donNom): ?array
+    {
+        $sql = "
+            SELECT *
+            FROM besoins
+            WHERE ville_id = :ville_id
+            AND LOWER(TRIM(description)) = LOWER(TRIM(:don_nom))
+            LIMIT 1
+        ";
+        $st = $this->pdo->prepare($sql);
+        $st->execute([
+            ':ville_id' => $villeId,
+            ':don_nom'  => $donNom,
+        ]);
+
+        $row = $st->fetch(\PDO::FETCH_ASSOC);
+        return $row ?: null;
+    }
+
+    public function getBesoinsAvecResteByVille(int $villeId): array
+    {
+        $sql = "
+            SELECT 
+                b.id,
+                b.description,
+                b.quantite,
+                b.unite,
+                b.remarque,
+                b.created_at,
+                t.nom AS type_nom,
+
+                COALESCE(SUM(di.quantite), 0) AS total_distribue,
+                (b.quantite - COALESCE(SUM(di.quantite), 0)) AS reste
+
+            FROM besoins b
+            JOIN types t ON t.id = b.type_id
+            LEFT JOIN distributions di ON di.besoin_id = b.id
+            WHERE b.ville_id = :ville_id
+            GROUP BY b.id, b.description, b.quantite, b.unite, b.remarque, b.created_at, t.nom
+            ORDER BY t.nom, b.description
+        ";
+        $st = $this->pdo->prepare($sql);
+        $st->execute([':ville_id' => $villeId]);
+        return $st->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
 }
