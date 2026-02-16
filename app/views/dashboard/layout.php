@@ -119,9 +119,20 @@ $links = [
                         <a class="nav-link click-scroll" href="#section_6">Contact</a>
                     </li>
 
-                    <li class="nav-item ms-3">
-                        <a class="nav-link custom-btn custom-border-btn btn" href="donate.html">Donate</a>
-                    </li>
+                    <?php if (empty($user)): ?>
+                        <li class="nav-item ms-3">
+                            <a class="nav-link custom-btn custom-border-btn btn" href="/login">
+                                Se connecter
+                            </a>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item ms-3">
+                            <a class="nav-link custom-btn custom-border-btn btn" href="/logout">
+                                Se déconnecter
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
                 </ul>
             </div>
         </div>

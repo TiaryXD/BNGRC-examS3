@@ -5,55 +5,47 @@ namespace app\controllers;
 use app\repositories\BesoinRepository;
 use app\repositories\VilleRepository;
 use app\repositories\TypeRepository;
-use PDO;
 
 class BesoinController
 {
-    private BesoinRepository $besoinRepository;
-    private VilleRepository $villeRepository;
-    private TypeRepository $typeRepository;
-
-    public function __construct(PDO $pdo)
+    /**
+     * Afficher la liste des besoins
+     */
+    public static function showBesoin($app)
     {
-        $this->besoinRepository = new BesoinRepository($pdo);
-        $this->villeRepository  = new VilleRepository($pdo);
-        $this->typeRepository   = new TypeRepository($pdo);
+        $repo = new BesoinRepository($app->getPDO());
 
-        $this->checkAuth();
+        $besoins = $repo->get_besoin();
+
+        $app->render('dashboard/besoin', [
+            'besoins' => $besoins,
+            'title'   => 'Liste des besoins'
+        ]);
     }
 
-    private function checkAuth()
+    /**
+     * Afficher formulaire création
+     */
+    public static function showCreate($app)
     {
-        if (!isset($_SESSION['admin_id'])) {
-            header("Location: /login");
-            exit;
-        }
+        $villeRepo = new VilleRepository($app->getPDO());
+        $typeRepo  = new TypeRepository($app->getPDO());
+
+        $app->render('dashboard/create', [
+            'villes' => $villeRepo->get_ville(),
+            'types'  => $typeRepo->get_type(),
+            'errors' => [],
+            'values' => [],
+            'title'  => 'Ajouter un besoin'
+        ]);
     }
 
-    /* Afficher la liste des besoins */
-    public function showBesoin()
+    /**
+     * Enregistrer un besoin
+     */
+    public static function store($app)
     {
-        $besoins = $this->besoinRepository->get_besoin();
-
-        require __DIR__ . '/../views/besoins/index.php';
-    }
-
-    /* Afficher le formulaire */
-    public function createBesoin()
-    {
-        $villes = $this->villeRepository->get_ville();
-        $types  = $this->typeRepository->get_type();
-
-        require __DIR__ . '/../views/besoins/create.php';
-    }
-
-    /* Enregistrer un besoin */
-    public function storeBesoin()
-    {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: /besoins");
-            exit;
-        }
+        $repo = new BesoinRepository($app->getPDO());
 
         $villeId     = $_POST['ville_id'] ?? null;
         $typeId      = $_POST['type_id'] ?? null;
@@ -62,13 +54,29 @@ class BesoinController
         $unite       = trim($_POST['unite'] ?? '');
         $remarque    = trim($_POST['remarque'] ?? '');
 
-        if (!$villeId || !$typeId || empty($description) || $quantite <= 0 || empty($unite)) {
-            $_SESSION['error'] = "Tous les champs obligatoires doivent être remplis.";
-            header("Location: /besoins/create");
-            exit;
+        $errors = [];
+
+        if (!$villeId)     $errors['ville_id'] = "Ville obligatoire";
+        if (!$typeId)      $errors['type_id'] = "Type obligatoire";
+        if (!$description) $errors['description'] = "Description obligatoire";
+        if ($quantite <= 0) $errors['quantite'] = "Quantité invalide";
+        if (!$unite)       $errors['unite'] = "Unité obligatoire";
+
+        if (!empty($errors)) {
+            $villeRepo = new VilleRepository($app->getPDO());
+            $typeRepo  = new TypeRepository($app->getPDO());
+
+            $app->render('dashboard/create', [
+                'errors' => $errors,
+                'values' => $_POST,
+                'villes' => $villeRepo->get_ville(),
+                'types'  => $typeRepo->get_type(),
+                'title'  => 'Ajouter un besoin'
+            ]);
+            return;
         }
 
-        $this->besoinRepository->insert_besoin(
+        $repo->insert_besoin(
             $villeId,
             $typeId,
             $description,
@@ -77,8 +85,7 @@ class BesoinController
             $remarque ?: null
         );
 
-        $_SESSION['success'] = "Besoin ajouté avec succès.";
-        header("Location: /besoins");
+        header("Location: /dashboard/besoin");
         exit;
     }
 }
