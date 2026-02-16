@@ -76,7 +76,7 @@ class DonController
             $remarque ?: null
         );
 
-        header("Location: /don");
+        header("Location: /dons");
         exit;
     }
 }
