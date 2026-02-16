@@ -63,5 +63,39 @@ class BesoinRepository
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getBesoinsByVilleAndType(int $villeId, int $typeId): array
+    {
+        $sql = "
+        SELECT b.*
+        FROM besoins b
+        WHERE b.ville_id = :ville_id
+            AND b.type_id  = :type_id
+        ORDER BY b.created_at DESC
+        ";
+        $st = $this->pdo->prepare($sql);
+        $st->execute([':ville_id' => $villeId, ':type_id' => $typeId]);
+        return $st->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function getBesoinById(int $id): ?array
+    {
+        $sql = "SELECT * FROM besoins WHERE id = :id LIMIT 1";
+        $st = $this->pdo->prepare($sql);
+        $st->execute([':id' => $id]);
+        $row = $st->fetch(\PDO::FETCH_ASSOC);
+        return $row ?: null;
+    }
+
+    public function getTotalDistribuePourBesoin(int $besoinId): float
+    {
+        $sql = "SELECT COALESCE(SUM(quantite),0) AS total
+                FROM distributions
+                WHERE besoin_id = :id";
+        $st = $this->pdo->prepare($sql);
+        $st->execute([':id' => $besoinId]);
+        return (float)($st->fetch(\PDO::FETCH_ASSOC)['total'] ?? 0);
+    }
+
     
 }

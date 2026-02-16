@@ -87,4 +87,12 @@ $router->group('', function(Router $router) use ($app) {
         StatDonController::getstatdon($app);
     });
 
+    $router->get('/distribuer', function() use ($app) {
+        DonController::showDistribuerForm($app);
+    });
+
+    $router->post('/distribuer/save', function() use ($app) {
+        DonController::saveDistribution($app);
+    });
+
 }, [ SecurityHeadersMiddleware::class ]);

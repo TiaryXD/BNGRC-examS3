@@ -65,7 +65,7 @@ class DonRepository
         $sql = "
             SELECT
                 LOWER(TRIM(d.description)) AS don_nom,
-                d.unite,
+                d.unite AS unite,
                 SUM(d.quantite) AS total_dons
             FROM dons d
             GROUP BY LOWER(TRIM(d.description)), d.unite
@@ -96,6 +96,29 @@ class DonRepository
         return $this->pdo->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public function getRestePourDon(string $donNom, string $unite): float
+    {
+        $sqlRecus = "
+        SELECT COALESCE(SUM(quantite),0) AS total
+        FROM dons
+        WHERE LOWER(TRIM(description)) = LOWER(TRIM(:don))
+            AND unite = :unite
+        ";
+        $st = $this->pdo->prepare($sqlRecus);
+        $st->execute([':don' => $donNom, ':unite' => $unite]);
+        $recus = (float)($st->fetch(\PDO::FETCH_ASSOC)['total'] ?? 0);
+
+        $sqlDistrib = "
+        SELECT COALESCE(SUM(quantite),0) AS total
+        FROM distributions
+        WHERE LOWER(TRIM(description)) = LOWER(TRIM(:don))
+        ";
+        $st = $this->pdo->prepare($sqlDistrib);
+        $st->execute([':don' => $donNom]);
+        $distrib = (float)($st->fetch(\PDO::FETCH_ASSOC)['total'] ?? 0);
+
+        return max(0, $recus - $distrib);
+    }
 
 
 }

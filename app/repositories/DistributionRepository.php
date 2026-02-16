@@ -57,4 +57,21 @@ class DistributionRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function insertDistribution(int $besoinId, string $description, float $quantite, ?string $remarque, $createdBy): void
+    {
+        $sql = "
+        INSERT INTO distributions (besoin_id, description, quantite, remarque, created_by)
+        VALUES (:besoin_id, :description, :quantite, :remarque, :created_by)
+        ";
+        $st = $this->pdo->prepare($sql);
+        $st->execute([
+        ':besoin_id' => $besoinId,
+        ':description' => $description,
+        ':quantite' => $quantite,
+        ':remarque' => $remarque,
+        ':created_by' => $createdBy,
+        ]);
+    }
+
+
 }

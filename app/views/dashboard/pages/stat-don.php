@@ -58,7 +58,12 @@ foreach ($totaux_distrib_par_type as $row) {
                     $recus = (float)$row['total_dons'];
                     $distrib = (float)($distribIndex[$type] ?? 0);
                     $reste = $recus - $distrib;
-                    $url = '/distribuer?don=' . urlencode($type);
+                    $unite  = $row['unite'];
+
+                    $url = '/distribuer?' . http_build_query([
+                    'don'   => $type,
+                    'unite' => $unite,
+                    ]);
                   ?>
                   <tr>
                     <td class="fw-semibold">
