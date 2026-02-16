@@ -49,5 +49,12 @@ $router->group('', function(Router $router) use ($app) {
     Flight::map('notFound', function(){
         Flight::redirect('/404?error=PageNotFound');
     });
+
+    $router->get('/404', function(){
+        Flight::render('error/404');
+    });
+
+
+
 	
 }, [ SecurityHeadersMiddleware::class ]);
