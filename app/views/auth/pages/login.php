@@ -39,12 +39,15 @@ if ($success) {
             </div>
           </div>
 
-          <form method="post" action="/login">
+          <form method="post" action="/login" id="loginForm" novalidate>
             <div class="mb-3">
               <label class="form-label">Email</label>
               <div class="input-group">
                 <span class="input-group-text"><i class="bi-envelope"></i></span>
-                <input type="email" name="email" class="form-control" placeholder="admin@bngrc.mg" required>
+                <input type="email" name="email" id="email" class="form-control <?= isInvalid('email', $errors) ?>" value="<?= formatText($values['email']) ?>" placeholder="admin@bngrc.mg" required>
+              </div>
+              <div class="invalid-feedback" id="emailError">
+                <?= formatText($errors['email']) ?>
               </div>
             </div>
 
@@ -52,7 +55,16 @@ if ($success) {
               <label class="form-label">Mot de passe</label>
               <div class="input-group">
                 <span class="input-group-text"><i class="bi-key"></i></span>
-                <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+                <input type="password"
+                  name="password"
+                  id="password"
+                  class="form-control <?= isInvalid('password', $errors) ?>"
+                  placeholder="••••••••"
+                  required>
+
+              </div>
+              <div class="invalid-feedback" id="passwordError">
+                <?= formatText($errors['password']) ?>
               </div>
             </div>
 

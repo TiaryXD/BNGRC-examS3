@@ -62,11 +62,11 @@ CREATE TABLE distributions (
     don_id          INT UNSIGNED NOT NULL,
     quantite        DECIMAL(12,2) NOT NULL,
     remarque        TEXT DEFAULT NULL,
-    created_by      INT UNSIGNED DEFAULT NULL,
+    created_by      INT DEFAULT NULL,
     date_distribution      DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (besoin_id)  REFERENCES besoins(id)  ON DELETE CASCADE,
     FOREIGN KEY (don_id)     REFERENCES dons(id)     ON DELETE RESTRICT,
-    FOREIGN KEY (created_by) REFERENCES admin(id)    ON DELETE SET NULL,
+    FOREIGN KEY (created_by) REFERENCES admin(id)    ON DELETE SET NULL
 
 );
 -- 1. Régions (quelques régions concernées par des catastrophes récentes ou fréquentes)
