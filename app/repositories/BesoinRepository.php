@@ -44,4 +44,22 @@ class BesoinRepository
 
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
+     
+    public function getbesoinbyidville(int $villeId)
+    {
+        $sql = "SELECT b.*, 
+                       v.nom AS ville_nom,
+                       t.nom AS type_nom
+                FROM besoins b
+                JOIN villes v ON b.ville_id = v.id
+                JOIN types t ON b.type_id = t.id
+                WHERE b.ville_id = :villeId
+                ORDER BY b.created_at DESC";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['villeId' => $villeId]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
 }

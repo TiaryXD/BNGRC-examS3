@@ -40,16 +40,19 @@ class BesoinController
 
     public static function showVilleById($app, $id)
     {
-        $repo = new VilleRepository($app->getPDO());
+        $repo = new VilleRepository($app->db());
 
         $ville = $repo->getVilleById((int)$id);
-
+        $repo = new BesoinRepository($app->db());
+        $besoins = $repo->getbesoinbyidville((int)$id);
         $app->render('dashboard/layout', [
             'ville' => $ville,
-            'page'  => 'ville_show',
+            'besoin'=> $besoins,
+            'page'  => 'ville-detail',
             'title' => 'Détail de la ville'
         ]);
     }
+
 
     /**
      * Afficher formulaire création
