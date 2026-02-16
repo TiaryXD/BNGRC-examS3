@@ -70,7 +70,7 @@ $router->group('', function(Router $router) use ($app) {
         DonController::historique($app);
     });
     
-    $router->post('/ajout-besoin', function() use ($app) {
+    $router->get('/ajout-besoin/@id', function() use ($app) {
         BesoinController::showCreate($app);
     });
     $router->post('/save-besoin', function() use ($app) {

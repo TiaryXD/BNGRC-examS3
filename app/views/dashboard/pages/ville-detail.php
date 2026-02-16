@@ -180,7 +180,7 @@ $totalDemande = count($besoin);
     <div class="row mt-5">
         <div class="col-12 text-center">
 
-            <a href="/besoin/create?ville_id=<?= (int)$ville['id'] ?>"
+            <a href="/ajout-besoin/<?= (int)$ville['id'] ?>"
             class="custom-btn btn btn-warning px-4 py-2">
 
                 <i class="bi-plus-circle me-2"></i>

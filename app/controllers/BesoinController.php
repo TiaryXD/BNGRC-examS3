@@ -71,7 +71,7 @@ class BesoinController
             'types'  => $typeRepo->get_type(),
             'errors' => [],
             'values' => [],
-            'page' => 'insert-besoin',
+            'page' => 'ajout-besoin',
             'title'  => 'Ajouter un besoin'
         ]);
     }
