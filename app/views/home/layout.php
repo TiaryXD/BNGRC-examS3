@@ -5,7 +5,11 @@ if (!isset($page)) {
 
 $page = $page ?? 'home';
 $title = $title ?? '';
-$user = $_SESSION['user'];
+if(!isset($_SESSION['user'])) {
+    $user = '';
+} else {
+    $user = $_SESSION['user'];
+}
 
 $cspNonce = Flight::get('csp_nonce');
 
@@ -18,7 +22,7 @@ $links = [
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>Tak'ALO | <?= $title ?></title>
+    <title>BNGRC | <?= $title ?></title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/favicon.ico" />
@@ -32,76 +36,75 @@ $links = [
 
 <body class="d-flex flex-column min-vh-100">
 
-<nav class="navbar navbar-expand-lg navbar-dark navbar-custom shadow-sm fixed-top">
-    <div class="container">
-        <a class="navbar-brand fw-bold fs-4 d-flex align-items-center gap-1" href="/accueil">
-            <img src="/assets/images/logo.png" style="width: 20px; height: 20px" alt="Logo Tak'ALO" class="logo-custom">
-            <span class="text-white">Tak'<span class=" fw-bold footer-lime-text">ALO</span></span>
-        </a>
+<nav class="navbar navbar-expand-lg navbar-dark bngrc-nav sticky-top">
+  <div class="container">
+    <a class="bngrc-brand navbar-brand" href="index.html">
+      <span class="bngrc-logo">BNGRC</span>
+      <span class="fw-semibold">Brandy 4201</span>
+    </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <?php foreach ($links as $link) {
-                    $isActive = (
-                            strtolower($page) === strtolower($link['label']) ||
-                            ($page === 'home' && $link['label'] === 'Accueil')
-                    ) ? 'active' : '';
-                    ?>
-                    <li class="nav-item">
-                        <a class="nav-link <?= $isActive ?>" href="<?= $link['href'] ?>">
-                            <?= $link['label'] ?>
-                        </a>
-                    </li>
-                <?php } ?>
-            </ul>
+    <div class="collapse navbar-collapse" id="navMain">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+        <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+        <li class="nav-item"><a class="nav-link" href="#apropos">À propos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="besoins.html">Besoins</a></li>
+        <li class="nav-item"><a class="nav-link" href="villes.html">Villes sinistrées</a></li>
 
-            <div class="dropdown">
-                <button class="btn btn-lime dropdown-toggle" type="button" id="profileMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-person-fill me-2"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="profileMenu">
-                    <li><a class="dropdown-item" href="/profil"><?= formatText($user['email']) ?></a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item text-danger" href="/logout">Déconnexion</a></li>
-                </ul>
-            </div>
-        </div>
+        <li class="nav-item only-guest">
+          <a class="btn ms-lg-2" href="/login">Se connecter</a>
+        </li>
+
+        <li class="nav-item only-logged">
+          <a class="btn btn-outline-light ms-lg-2" href="index.html">Se déconnecter</a>
+        </li>
+      </ul>
     </div>
+  </div>
 </nav>
 
 <main class="container">
     <?php require 'pages/' . $page . '.php'; ?>
 </main>
 
-<footer class="footer-custom py-4 mt-auto">
-    <div class="container">
-        <div class="row">
-            <a class="col-md-6 navbar-brand fw-bold fs-4 d-flex align-items-center gap-1" href="/accueil">
-                <img src="/assets/images/logo.png" style="width: 20px; height: 20px" alt="Logo Tak'ALO" class="logo-custom">
-                <span class="text-white">Tak'<span class=" fw-bold footer-lime-text">ALO</span></span>
-            </a>
-            <div class="col-md-6 text-center text-md-end">
-                <div class="d-flex justify-content-center justify-content-md-end gap-3">
-                    <a href="#" class="footer-lime-text fs-4"><i class="bi bi-github"></i></a>
-                </div>
-            </div>
-        </div>
-        <hr class="my-4 border-secondary">
-        <div class="text-center d-flex flex-column gap-2">
-            <p class="small mb-0"><i class="bi bi-c-circle"></i> Février 2026 - IT University</p>
-            <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2 gap-md-4">
-                <p class="small mb-0">RAVELOMANANTSOA Tony Mahefa - ETU004054</p>
-                <p class="small mb-0 d-none d-md-block">|</p>
-                <p class="small mb-0">RAKOTOBE Joshua Riki - ETU004155</p>
-                <p class="small mb-0 d-none d-md-block">|</p>
-                <p class="small mb-0">ANDRIANOARIMANANA Youssi - ETU004387</p>
-            </div>
-        </div>
+<footer class="bngrc-footer pt-4 pb-3" id="contact">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <h6 class="text-uppercase fw-bold">Contact</h6>
+        <ul class="list-unstyled small mb-0">
+          <li>Email: contact@bngrc.mg</li>
+          <li>Tél: +261 00 00 000 00</li>
+          <li>Adresse: Antananarivo, Madagascar</li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h6 class="text-uppercase fw-bold">Réseaux sociaux</h6>
+        <ul class="list-unstyled small mb-0">
+          <li>Facebook: @BNGRC</li>
+          <li>Instagram: @BNGRC</li>
+          <li>X: @BNGRC</li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h6 class="text-uppercase fw-bold">ETU Groupe</h6>
+        <ul class="list-unstyled small mb-0">
+          <li>2804 - Finaritra</li>
+          <li>4201 - Brandy</li>
+          <li>4254 - Tiary</li>
+        </ul>
+      </div>
     </div>
+
+    <hr class="border-light opacity-25 my-3">
+    <div class="d-flex flex-wrap justify-content-between small">
+      <span>© 2026 S3 — BNGRC</span>
+    </div>
+  </div>
 </footer>
 </body>
 </html>

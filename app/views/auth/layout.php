@@ -35,7 +35,7 @@
                 <header>
                     <div class="mb-4 d-flex align-items-center gap-1">
                         <img src="/assets/images/logo.png" style="width: 20px; height: 20px" alt="Logo">
-                        <span class="fs-4">Tak'<span class="fw-bold" style="color: var(--lime-color)">ALO</span></span>
+                        <span class="fs-4">BNGRC</span>
                     </div>
                 </header>
                 <div>
@@ -51,7 +51,7 @@
 
                 <footer class="col-12 pt-5">
                     <div class="d-flex gap-2 w-100 justify-content-center text-muted">
-                        <p class="small"><i class="bi bi-c-circle"></i> 2026 - IT University</p>
+                        <p class="small"><i class="bi bi-c-circle"></i> 2026 - BNGRC</p>
                     </div>
                 </footer>
             </section>

@@ -9,14 +9,15 @@ class HomeController
     public static function showHome($app)
     {
         if (!isset($_SESSION['user'])) {
-            Flight::redirect('/login');
-            return;
+            $user = '';
+        } else {
+            $user = $_SESSION['user'];
         }
 
         $app->render('home/layout', [
             'page' => 'home',
             'title' => 'Accueil',
-            'user' => $_SESSION['user'],
+            'user' => $user,
         ]);
     }
 
