@@ -27,12 +27,12 @@ class BesoinController
 
         public static function showVille($app)
     {
-        $repo = new VilleRepository($app->getPDO());
+        $repo = new VilleRepository($app->db());
 
         $villes = $repo->get_ville();
 
         $app->render('dashboard/layout', [
-            'ville' => $villes,
+            'villes' => $villes,
             'page' => 'ville',
             'title'   => 'Liste des villes'
         ]);
@@ -56,8 +56,8 @@ class BesoinController
      */
     public static function showCreate($app)
     {
-        $villeRepo = new VilleRepository($app->getPDO());
-        $typeRepo  = new TypeRepository($app->getPDO());
+        $villeRepo = new VilleRepository($app->db());
+        $typeRepo  = new TypeRepository($app->db());
 
         $app->render('dashboard/layout', [
             'villes' => $villeRepo->get_ville(),
