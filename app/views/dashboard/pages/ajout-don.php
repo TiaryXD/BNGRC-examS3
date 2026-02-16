@@ -2,14 +2,10 @@
 $errors = $errors ?? [];
 $values = $values ?? [];
 
-$villes = $villes ?? [];
-$types  = $types ?? [];
-
-// si tu arrives depuis /ville/@id, tu peux envoyer ville_id via GET
-$selectedVille = $values['ville_id'] ?? ($_GET['ville_id'] ?? null);
+$types = $types ?? []; // attendu depuis le controller
 
 function fieldInvalid($name, $errors) {
-    return !empty($errors[$name]) ? 'is-invalid' : '';
+  return !empty($errors[$name]) ? 'is-invalid' : '';
 }
 ?>
 
@@ -22,28 +18,11 @@ function fieldInvalid($name, $errors) {
         <div class="custom-block p-4 p-lg-5">
 
           <div class="text-center mb-4">
-            <h2 class="mb-2">Ajouter un besoin</h2>
-            <p class="text-muted mb-0">Renseignez les informations du besoin pour une ville sinistrée.</p>
+            <h2 class="mb-2">Entrer un don</h2>
+            <p class="text-muted mb-0">Ajoutez un nouveau don reçu dans l’inventaire.</p>
           </div>
 
-          <form method="POST" action="/save-besoin" class="row g-3" novalidate>
-
-            <!-- VILLE -->
-            <div class="col-12">
-              <label class="form-label fw-semibold">Ville</label>
-              <select name="ville_id" class="form-select <?= fieldInvalid('ville_id', $errors) ?>" required>
-                <option value="">-- Choisir une ville --</option>
-                <?php foreach ($villes as $v): ?>
-                  <option value="<?= (int)$v['id'] ?>"
-                    <?= ((string)$selectedVille === (string)$v['id']) ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($v['nom']) ?>
-                  </option>
-                <?php endforeach; ?>
-              </select>
-              <?php if (!empty($errors['ville_id'])): ?>
-                <div class="invalid-feedback d-block"><?= htmlspecialchars($errors['ville_id']) ?></div>
-              <?php endif; ?>
-            </div>
+          <form method="POST" action="/dons/save" class="row g-3" novalidate>
 
             <!-- TYPE -->
             <div class="col-12">
@@ -68,7 +47,7 @@ function fieldInvalid($name, $errors) {
               <input type="text"
                      name="description"
                      class="form-control <?= fieldInvalid('description', $errors) ?>"
-                     placeholder="Ex: Riz blanc, Eau potable, Tôle ondulée..."
+                     placeholder="Ex: Riz blanc, Eau potable, Couvertures..."
                      value="<?= htmlspecialchars($values['description'] ?? '') ?>"
                      required>
               <?php if (!empty($errors['description'])): ?>
@@ -80,9 +59,9 @@ function fieldInvalid($name, $errors) {
             <div class="col-md-6">
               <label class="form-label fw-semibold">Quantité</label>
               <input type="number"
+                     name="quantite"
                      step="0.01"
                      min="0"
-                     name="quantite"
                      class="form-control <?= fieldInvalid('quantite', $errors) ?>"
                      placeholder="Ex: 1000"
                      value="<?= htmlspecialchars($values['quantite'] ?? '') ?>"
@@ -97,7 +76,7 @@ function fieldInvalid($name, $errors) {
               <input type="text"
                      name="unite"
                      class="form-control <?= fieldInvalid('unite', $errors) ?>"
-                     placeholder="Ex: kg, litre, pièce, Ar..."
+                     placeholder="Ex: kg, litre, pièce..."
                      value="<?= htmlspecialchars($values['unite'] ?? '') ?>"
                      required>
               <?php if (!empty($errors['unite'])): ?>
@@ -105,17 +84,39 @@ function fieldInvalid($name, $errors) {
               <?php endif; ?>
             </div>
 
+            <!-- DATE RECEPTION -->
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Date de réception</label>
+              <input type="date"
+                     name="date_reception"
+                     class="form-control <?= fieldInvalid('date_reception', $errors) ?>"
+                     value="<?= htmlspecialchars($values['date_reception'] ?? '') ?>"
+                     required>
+              <?php if (!empty($errors['date_reception'])): ?>
+                <div class="invalid-feedback d-block"><?= htmlspecialchars($errors['date_reception']) ?></div>
+              <?php endif; ?>
+            </div>
+
+            <!-- SOURCE -->
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Source (optionnel)</label>
+              <input type="text"
+                     name="source"
+                     class="form-control"
+                     placeholder="Ex: ONG, Entreprise, Particulier..."
+                     value="<?= htmlspecialchars($values['source'] ?? '') ?>">
+            </div>
+
             <!-- REMARQUE -->
             <div class="col-12">
               <label class="form-label fw-semibold">Remarque (optionnel)</label>
               <textarea name="remarque" class="form-control" rows="3"
-                        placeholder="Infos complémentaires..."><?= htmlspecialchars($values['remarque'] ?? '') ?></textarea>
+                        placeholder="Informations complémentaires..."><?= htmlspecialchars($values['remarque'] ?? '') ?></textarea>
             </div>
 
             <!-- ACTIONS -->
-            <div class="col-12 d-flex flex-wrap gap-2 justify-content-between align-items-center mt-2">
-              <a href="<?= $selectedVille ? '/ville/' . (int)$selectedVille : '/ville' ?>"
-                 class="btn btn-outline-secondary">
+            <div class="col-12 d-flex justify-content-between align-items-center mt-2">
+              <a href="/dons" class="btn btn-outline-secondary">
                 <i class="bi-arrow-left"></i> Annuler
               </a>
 

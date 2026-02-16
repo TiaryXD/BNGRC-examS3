@@ -14,12 +14,16 @@ foreach ($dons as $d) {
 <section class="section-padding">
   <div class="container">
 
-    <!-- TITRE -->
-    <div class="row">
-      <div class="col-lg-8 col-12 mx-auto text-center mb-5">
-        <h2 class="mb-3">Historique des dons</h2>
-        <p class="text-muted mb-0">Suivi des dons reçus et informations associées.</p>
-      </div>
+    <div class="row mb-4">
+        <div class="col-lg-8 col-12 mx-auto text-center">
+            <h2 class="mb-2">Historique des dons</h2>
+            <p class="text-muted mb-3">Suivi des dons reçus et informations associées.</p>
+
+            <a href="/dons/ajout" class="custom-btn btn">
+            <i class="bi-plus-circle me-2"></i>
+            Entrer un don
+            </a>
+        </div>
     </div>
 
     <!-- STATS -->
