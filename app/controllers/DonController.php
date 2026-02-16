@@ -10,7 +10,6 @@ class DonController
     public static function historique($app)
     {
         $repo = new DonRepository($app->db());
-
         $dons = $repo->get_historique();
 
         $app->render('dashboard/layout', [

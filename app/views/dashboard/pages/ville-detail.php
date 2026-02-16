@@ -7,10 +7,7 @@ if (!$ville) {
     return;
 }
 
-$totalDemande = 0;
-foreach ($besoin as $b) {
-    $totalDemande += (float)$b['quantite'];
-}
+$totalDemande = count($besoin);
 ?>
 
 <section class="section-padding">
