@@ -26,9 +26,12 @@
                     <div class="custom-block-wrap">
 
                         <!-- IMAGE -->
-                        <img src="/assets/images/cities/<?= htmlspecialchars($ville['nom']) ?>.png"
-                             class="custom-block-image img-fluid"
-                             alt="<?= htmlspecialchars($ville['nom']) ?>">
+                        <div class="city-image-wrapper">
+                            <img src="/assets/images/cities/<?= htmlspecialchars($ville['nom']) ?>.png"
+                                class="custom-block-image img-fluid city-image"
+                                alt="<?= htmlspecialchars($ville['nom']) ?>">
+                        </div>
+
 
                         <div class="custom-block">
 
