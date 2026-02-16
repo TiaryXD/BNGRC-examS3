@@ -85,31 +85,57 @@ class BesoinController
     {
         $repo = new BesoinRepository($app->db());
 
-        $villeId     = $_POST['ville_id'] ?? null;
-        $typeId      = $_POST['type_id'] ?? null;
-        $description = trim($_POST['description'] ?? '');
-        $quantite    = (float) ($_POST['quantite'] ?? 0);
-        $unite       = trim($_POST['unite'] ?? '');
-        $remarque    = trim($_POST['remarque'] ?? '');
+        $villeId       = isset($_POST['ville_id']) ? (int) $_POST['ville_id'] : null;
+        $typeId        = isset($_POST['type_id']) ? (int) $_POST['type_id'] : null;
+        $description   = trim($_POST['description'] ?? '');
+        $quantite      = (float) ($_POST['quantite'] ?? 0);
+        $unite         = trim($_POST['unite'] ?? '');
+        $remarque      = trim($_POST['remarque'] ?? '');
+
+        $prixUnitaire  = isset($_POST['prix_unitaire']) && $_POST['prix_unitaire'] !== ''
+            ? (float) $_POST['prix_unitaire']
+            : null;
 
         $errors = [];
 
-        if (!$villeId)     $errors['ville_id'] = "Ville obligatoire";
-        if (!$typeId)      $errors['type_id'] = "Type obligatoire";
-        if (!$description) $errors['description'] = "Description obligatoire";
-        if ($quantite <= 0) $errors['quantite'] = "Quantité invalide";
-        if (!$unite)       $errors['unite'] = "Unité obligatoire";
+        if (!$villeId)        $errors['ville_id'] = "Ville obligatoire";
+        if (!$typeId)         $errors['type_id'] = "Type obligatoire";
+        if (!$description)    $errors['description'] = "Description obligatoire";
+        if ($quantite <= 0)   $errors['quantite'] = "Quantité invalide";
+        if (!$unite)          $errors['unite'] = "Unité obligatoire";
+
+        $typeRepo = new TypeRepository($app->db());
+        $types = $typeRepo->get_type();
+        $typeNom = null;
+
+        foreach ($types as $t) {
+            if ((int)$t['id'] === (int)$typeId) {
+                $typeNom = $t['nom'];
+                break;
+            }
+        }
+
+        if ($typeNom === null) {
+            $errors['type_id'] = "Type invalide";
+        }
+
+        if ($typeNom === 'Argent') {
+            $prixUnitaire = null;
+        } else {
+            if ($prixUnitaire === null || $prixUnitaire <= 0) {
+                $errors['prix_unitaire'] = "Prix unitaire obligatoire (doit être > 0) pour Nature/Matériaux";
+            }
+        }
 
         if (!empty($errors)) {
             $villeRepo = new VilleRepository($app->db());
-            $typeRepo  = new TypeRepository($app->db());
 
             $app->render('dashboard/layout', [
                 'errors' => $errors,
                 'values' => $_POST,
                 'villes' => $villeRepo->get_ville(),
-                'types'  => $typeRepo->get_type(),
-                'page' => 'ajout-besoin',
+                'types'  => $types,
+                'page'   => 'ajout-besoin',
                 'title'  => 'Ajouter un besoin'
             ]);
             return;
@@ -121,11 +147,13 @@ class BesoinController
             $description,
             $quantite,
             $unite,
-            $remarque ?: null
+            $remarque ?: null,
+            $prixUnitaire
         );
 
         header("Location: /ville/$villeId");
         exit;
     }
+
 
 }

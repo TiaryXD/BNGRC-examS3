@@ -230,3 +230,6 @@ VALUES
 
 -- Financier
 (7, 'Aide financière', 5000000, 'Aide directe ménages', 1);
+
+ALTER TABLE besoins 
+ADD prix_unitaire DECIMAL(12,2) DEFAULT NULL;
