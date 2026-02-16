@@ -14,7 +14,7 @@ class HomeController
             $user = $_SESSION['user'];
         }
 
-        $app->render('home/layout', [
+        $app->render('dashboard/layout', [
             'page' => 'home',
             'title' => 'Accueil',
             'user' => $user,
