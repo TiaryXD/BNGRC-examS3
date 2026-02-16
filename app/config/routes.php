@@ -69,7 +69,12 @@ $router->group('', function(Router $router) use ($app) {
         $router->get('/dons', function() use ($app) {
         DonController::historique($app);
     });
-     
     
+    $router->post('/ajout-besoin', function() use ($app) {
+        BesoinController::showCreate($app);
+    });
+    $router->post('/save-besoin', function() use ($app) {
+        BesoinController::saveBesoinbyidville($app);
+    });
 
 }, [ SecurityHeadersMiddleware::class ]);

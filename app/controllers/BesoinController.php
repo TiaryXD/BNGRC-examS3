@@ -71,10 +71,12 @@ class BesoinController
             'types'  => $typeRepo->get_type(),
             'errors' => [],
             'values' => [],
-            'page' => 'besoin',
+            'page' => 'insert-besoin',
             'title'  => 'Ajouter un besoin'
         ]);
     }
+
+
 
     /**
      * Enregistrer un besoin
@@ -107,7 +109,7 @@ class BesoinController
                 'values' => $_POST,
                 'villes' => $villeRepo->get_ville(),
                 'types'  => $typeRepo->get_type(),
-                'page' => 'besoin',
+                'page' => 'ajout-besoin',
                 'title'  => 'Ajouter un besoin'
             ]);
             return;
@@ -122,7 +124,8 @@ class BesoinController
             $remarque ?: null
         );
 
-        header("Location: /dashboard/ville/$villeId");
+        header("Location: /ville/$villeId");
         exit;
     }
+
 }
