@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\repositories\BesoinRepository;
 use app\repositories\VilleRepository;
 use app\repositories\TypeRepository;
+use Flight;
 
 class BesoinController
 {

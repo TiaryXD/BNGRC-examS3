@@ -92,7 +92,7 @@ $links = [
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#section_2">Villes</a>
+                        <a class="nav-link click-scroll" href="/ville">Villes</a>
                     </li>
 
                     <li class="nav-item">
@@ -159,7 +159,7 @@ $links = [
 
                         <li class="footer-menu-item"><a href="/besoins" class="footer-menu-link">Besoins</a></li>
 
-                        <li class="footer-menu-item"><a href="/villes" class="footer-menu-link">Villes</a></li>
+                        <li class="footer-menu-item"><a href="/ville" class="footer-menu-link">Villes</a></li>
 
                         <li class="footer-menu-item"><a href="/dons" class="footer-menu-link">Dons</a></li>
                     </ul>
