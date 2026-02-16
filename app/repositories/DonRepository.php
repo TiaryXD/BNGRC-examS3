@@ -60,4 +60,30 @@ class DonRepository
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getTotalDonsParType(): array
+    {
+        $sql = "SELECT t.id AS type_id, t.nom AS type_nom,
+                    COALESCE(SUM(d.quantite), 0) AS total_dons
+                FROM types t
+                LEFT JOIN dons d ON d.type_id = t.id
+                GROUP BY t.id, t.nom
+                ORDER BY t.nom";
+
+        return $this->pdo->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function getTotalDistributionsParType(): array
+    {
+        $sql = "SELECT t.id AS type_id, t.nom AS type_nom,
+                    COALESCE(SUM(di.quantite), 0) AS total_distributions
+                FROM types t
+                LEFT JOIN besoins b ON b.type_id = t.id
+                LEFT JOIN distributions di ON di.besoin_id = b.id
+                GROUP BY t.id, t.nom
+                ORDER BY t.nom";
+
+        return $this->pdo->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+
 }

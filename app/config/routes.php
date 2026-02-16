@@ -8,7 +8,7 @@ use app\controllers\AuthController;
 use app\controllers\HomeController;
 use app\controllers\BesoinController;
 use app\controllers\DonController;
-
+use app\controllers\StatDonController;
 
 /** 
  * @var Router $router 
@@ -82,5 +82,11 @@ $router->group('', function(Router $router) use ($app) {
     $router->post('/save-don', function() use ($app) {
         DonController::savedon($app);
     });
+    
+    $router->get('/stat-don', function() use ($app) {
+        StatDonController::getstatdon($app);
+    });
+
+
 
 }, [ SecurityHeadersMiddleware::class ]);
