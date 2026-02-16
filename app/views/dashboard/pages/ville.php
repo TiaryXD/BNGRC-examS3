@@ -26,7 +26,7 @@
                     <div class="custom-block-wrap">
 
                         <!-- IMAGE -->
-                        <img src="/assets/images/cities/default-city.jpg"
+                        <img src="/assets/images/cities/<?= htmlspecialchars($ville['nom']) ?>.png"
                              class="custom-block-image img-fluid"
                              alt="<?= htmlspecialchars($ville['nom']) ?>">
 
@@ -42,49 +42,7 @@
 
                                 <h5 class="mb-3 mt-2">
                                     <?= htmlspecialchars($ville['nom']) ?>
-                                </h5>
-
-                                <!-- STATS -->
-                                <ul class="list-unstyled small mb-3">
-
-                                    <li>
-                                        <i class="bi-clipboard-data text-warning"></i>
-                                        <strong>Besoins :</strong>
-                                        <?= (int)$ville['nb_besoins'] ?>
-                                    </li>
-
-                                    <li>
-                                        <i class="bi-exclamation-triangle text-danger"></i>
-                                        <strong>Total demandé :</strong>
-                                        <?= number_format($ville['besoin_total'],0,',',' ') ?>
-                                    </li>
-
-                                    <li>
-                                        <i class="bi-box-seam text-success"></i>
-                                        <strong>Reste :</strong>
-                                        <?= number_format($ville['besoin_restant_total'],0,',',' ') ?>
-                                    </li>
-
-                                </ul>
-
-                                <!-- PROGRESS BAR -->
-                                <?php
-                                $progress = 0;
-                                if ($ville['besoin_total'] > 0) {
-                                    $progress =
-                                        100 - (
-                                            ($ville['besoin_restant_total']
-                                            / $ville['besoin_total']) * 100
-                                        );
-                                }
-                                ?>
-
-                                <div class="progress mb-3" style="height:8px;">
-                                    <div class="progress-bar bg-warning"
-                                         role="progressbar"
-                                         style="width: <?= max(0,min(100,$progress)) ?>%">
-                                    </div>
-                                </div>
+                                </h5>                                
 
                             </div>
 
