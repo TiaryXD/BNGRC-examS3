@@ -13,7 +13,7 @@ class VilleRepository
         $this->pdo = $pdo;
     }
 
-    public function find_ville()
+    public function get_ville()
     {
         $sql = "SELECT v.*, r.nom as region_nom
                 FROM villes v

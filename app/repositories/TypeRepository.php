@@ -13,7 +13,7 @@ class TypeRepository
         $this->pdo = $pdo;
     }
 
-    public function show_type()
+    public function get_type()
     {
         return $this->pdo
             ->query("SELECT * FROM types ORDER BY nom")
