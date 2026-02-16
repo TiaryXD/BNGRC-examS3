@@ -97,27 +97,7 @@ $links = [
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#section_3">Besoins</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#section_4">Dons</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link click-scroll dropdown-toggle" href="#section_5"
-                            id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">News</a>
-
-                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                            <li><a class="dropdown-item" href="news.html">News Listing</a></li>
-
-                            <li><a class="dropdown-item" href="news-detail.html">News Detail</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#section_6">Contact</a>
+                        <a class="nav-link click-scroll" href="/dons">Dons</a>
                     </li>
 
                     <?php if (empty($user)): ?>
@@ -157,8 +137,6 @@ $links = [
 
                     <ul class="footer-menu">
                         <li class="footer-menu-item"><a href="/" class="footer-menu-link">Accueil</a></li>
-
-                        <li class="footer-menu-item"><a href="/besoins" class="footer-menu-link">Besoins</a></li>
 
                         <li class="footer-menu-item"><a href="/ville" class="footer-menu-link">Villes</a></li>
 
