@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\repositories\DonRepository;
+use app\repositories\TypeRepository;
 use Flight;
 
 class DonController

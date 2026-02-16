@@ -19,7 +19,7 @@ foreach ($dons as $d) {
             <h2 class="mb-2">Historique des dons</h2>
             <p class="text-muted mb-3">Suivi des dons reçus et informations associées.</p>
 
-            <a href="/dons/ajout" class="custom-btn btn">
+            <a href="/ajout-don" class="custom-btn btn">
             <i class="bi-plus-circle me-2"></i>
             Entrer un don
             </a>
