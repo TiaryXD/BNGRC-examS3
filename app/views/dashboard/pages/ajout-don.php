@@ -22,7 +22,7 @@ function fieldInvalid($name, $errors) {
             <p class="text-muted mb-0">Ajoutez un nouveau don reçu dans l’inventaire.</p>
           </div>
 
-          <form method="POST" action="/save-besoin" class="row g-3" novalidate>
+          <form method="POST" action="/save-don" class="row g-3" novalidate>
 
             <!-- TYPE -->
             <div class="col-12">
