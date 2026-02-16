@@ -1,0 +1,36 @@
+:root {
+    --lime-color: #ccff00;
+    --dark-bg: #403c3c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Product Sans", sans-serif;
+    font-weight: 300;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    text-decoration: none;
+}
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+}
+
+h1 {
+    font-weight: 700;
+}
+
+em {
+    font-style: italic;
+}
+
+.lime-text {
+    color: var(--lime-color);
+}
+
+
+

@@ -1,0 +1,83 @@
+@font-face {
+    font-family: "Product Sans";
+    src: url("../fonts/ProductSans/ProductSans-Thin.woff") format("woff");
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Product Sans";
+    src: url("../fonts/ProductSans/ProductSans-ThinItalic.woff") format("woff");
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Product Sans";
+    src: url("../fonts/ProductSans/ProductSans-Light.woff") format("woff");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Product Sans";
+    src: url("../fonts/ProductSans/ProductSans-LightItalic.woff") format("woff");
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Product Sans";
+    src: url("../fonts/ProductSans/ProductSans-Regular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Product Sans";
+    src: url("../fonts/ProductSans/ProductSans-Italic.woff") format("woff");
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Product Sans";
+    src: url("../fonts/ProductSans/ProductSans-Medium.woff") format("woff");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Product Sans";
+    src: url("../fonts/ProductSans/ProductSans-MediumItalic.woff") format("woff");
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Product Sans";
+    src: url("../fonts/ProductSans/ProductSans-Bold.woff") format("woff");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Product Sans";
+    src: url("../fonts/ProductSans/ProductSans-BoldItalic.woff") format("woff");
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Product Sans";
+    src: url("../fonts/ProductSans/ProductSans-Black.woff") format("woff");
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Product Sans";
+    src: url("../fonts/ProductSans/ProductSans-BlackItalic.woff") format("woff");
+    font-weight: 900;
+    font-style: italic;
+}

@@ -1,0 +1,85 @@
+:root {
+    --lime-color: #ccff00;
+    --dark-bg: #0b0b0b;
+}
+
+body {
+    background-color: var(--dark-bg) !important;
+    overflow: hidden;
+    height: 100vh;
+    margin: 0;
+}
+
+.error-page {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+.error-code {
+    font-size: clamp(8rem, 25vw, 18rem);
+    font-weight: 900;
+    line-height: 0.8;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--lime-color);
+    margin-bottom: 0;
+    letter-spacing: -8px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: default;
+}
+
+.error-code:hover {
+    color: var(--lime-color);
+    -webkit-text-stroke: 2px transparent;
+}
+
+.error-divider {
+    height: 5px;
+    width: 80px;
+    background-color: var(--lime-color);
+    margin: 1.5rem auto;
+}
+
+.text-lime {
+    color: var(--lime-color) !important;
+}
+
+.uppercase-text {
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 1.2rem;
+}
+
+.btn-lime {
+    background-color: var(--lime-color) !important;
+    color: #000 !important;
+    font-weight: 800;
+    border-radius: 10px !important;
+    border: none;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
+}
+
+.btn-lime:hover {
+    transform: scale(1.05);
+    background-color: #b8e600 !important;
+    box-shadow: 0 0 20px rgba(204, 255, 0, 0.3);
+}
+
+.error-watermark {
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    font-size: clamp(3rem, 10vw, 8rem);
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.03);
+    pointer-events: none;
+    text-transform: uppercase;
+    z-index: -1;
+}
+
+.text-muted {
+    color: #888 !important;
+}

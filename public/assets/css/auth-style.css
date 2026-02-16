@@ -1,0 +1,75 @@
+:root {
+    --lime-color: #ccff00;
+    --dark-bg: #0b0b0b;
+    --dark-surface: #1a1a1a;
+}
+
+.custom-sidebar {
+    background-color: var(--dark-bg);
+    border-radius: 10px;
+}
+
+.form-control-lg {
+    font-size: 0.95rem;
+    border-radius: 0px;
+    background-color: var(--dark-surface) !important;
+    border: 1px solid #333;
+    color: #fff !important;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(204, 255, 0, 0.15);
+    border: 1px solid var(--lime-color) !important;
+}
+
+.btn-outline-light {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+    border-radius: 0px;
+    border: 1px solid var(--lime-color);
+    color: var(--lime-color);
+}
+
+.btn-outline-light:hover {
+    background-color: var(--lime-color);
+    color: #000;
+}
+
+form .btn {
+    background: var(--lime-color) !important;
+    color: #000 !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: none !important;
+    border-radius: 0px !important;
+}
+
+a {
+    transition: 0.3s ease;
+    color: var(--lime-color) !important;
+}
+
+.page {
+    transition: opacity 200ms ease, transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
+}
+
+.page.page-enter {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.page.page-enter.page-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.page.page-leave {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.page.page-leave.page-leave-active {
+    opacity: 0;
+    transform: translateY(-10px);
+}
