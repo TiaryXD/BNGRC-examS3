@@ -1,0 +1,15 @@
+/* ===== Images villes uniformes ===== */
+
+.city-image-wrapper {
+    width: 100%;
+    height: 220px;          /* hauteur identique pour toutes */
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+}
+
+.city-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;      /* remplit sans déformer */
+    object-position: center;
+}

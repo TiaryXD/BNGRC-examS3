@@ -1,5 +1,6 @@
 <?php
 
+use app\controllers\DonController;
 use app\middlewares\SecurityHeadersMiddleware;
 use flight\Engine;
 use flight\net\Router;
@@ -59,9 +60,14 @@ $router->group('', function(Router $router) use ($app) {
         BesoinController::showVille($app);
     });
 
-    // $router->get('/villes/{id}', function($id) use ($app) {
-    //     BesoinController::showVilleById($app, $id);
-    // });
+    $router->get('/villes/{id}', function($id) use ($app) {
+        BesoinController::showVilleById($app, $id);
+    });
+
+        $router->get('/dons', function() use ($app) {
+        DonController::historique($app);
+    });
+     
     
 
 }, [ SecurityHeadersMiddleware::class ]);
