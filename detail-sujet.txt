@@ -1,0 +1,43 @@
+Application BNGRC gestion collectes et distributions de dons pour les sinistrés
+
+Type de besoin : 
+    - en nature (riz, huile, ...)
+    - en matériaux (tôle, clou, ...)
+    - en argent
+
+Fonctionnement :
+    - on saisie les besoins des sinistrés PAR VILLE
+        ex: Tamatave a besoin : 1500kg de riz, 150L d'huile, 200m de tole, 10 boites de clou etc
+    - on saisie les dons
+    - une page pour donner les dons
+
+Objectif principal :
+    - une page tableau de bord
+        - liste des villes avec details 
+            - besoins
+            - dons attribués
+
+Règle de gestion
+    - erreur si qté de dons > besoins de la ville
+        ex: dons 300.000 Ar or besoin 100.000 Ar
+
+Idée hitondrana azy :
+
+    - accueil general
+
+    - login admin 
+        - admin anaty base (pas d'inscription)
+        - verification mail et password
+
+        - coté admin
+            - possibilité de distribuer les dons
+            
+    - login donneur
+        - auto inscription
+        - verification mail existant
+        - pas de password
+
+        - coté donneur
+            - possibilité de faire des dons selon liste des besoins
+    
+    
