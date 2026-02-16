@@ -49,7 +49,7 @@ class AuthController
 
             $_SESSION['user'] = $repo->getAdminByEmail($email);
 
-            Flight::redirect('/accueil');
+            Flight::redirect('/');
 
             return;
         }
@@ -65,6 +65,6 @@ class AuthController
     public static function logout()
     {
         session_destroy();
-        Flight::redirect('/login');
+        Flight::redirect('/');
     }
 }

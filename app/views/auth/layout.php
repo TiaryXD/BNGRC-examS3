@@ -19,11 +19,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="/favicon.ico" />
 
-  <!-- CSS -->
   <link rel="stylesheet" href="/assets/icons/bootstrap-icons.min.css" />
   <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/assets/css/style.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/templatemo-kind-heart-charity.css" />
+  <link rel="stylesheet" type="text/css" href="/assets/css/templatemo-kind-heart-charity.css" />
+  <script src="/assets/js/validation-ajax.js" defer nonce="<?= formatText($cspNonce) ?>"></script>
+  
 
 
   <script src="/assets/js/bootstrap.bundle.min.js" defer nonce="<?= formatText($cspNonce) ?>"></script>
@@ -31,12 +32,10 @@
 
 <body class="d-flex flex-column min-vh-100">
 
-<!-- CONTENT -->
 <main class="flex-grow-1">
   <?php require __DIR__ . '/pages/' . $page . '.php'; ?>
 </main>
 
-<!-- FOOTER -->
 <footer class="bngrc-footer pt-4 pb-3 mt-auto" id="contact">
   <div class="container">
     <div class="row g-4">

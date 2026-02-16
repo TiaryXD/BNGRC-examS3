@@ -92,15 +92,15 @@ $links = [
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#section_2">About</a>
+                        <a class="nav-link click-scroll" href="#section_2">Villes</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#section_3">Causes</a>
+                        <a class="nav-link click-scroll" href="#section_3">Besoins</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#section_4">Volunteer</a>
+                        <a class="nav-link click-scroll" href="#section_4">Dons</a>
                     </li>
 
                     <li class="nav-item dropdown">

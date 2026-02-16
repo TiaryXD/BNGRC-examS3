@@ -29,8 +29,9 @@ class BesoinController
 
         $villes = $repo->get_ville();
 
-        $app->render('dashboard/ville', [
+        $app->render('dashboard/layout', [
             'ville' => $villes,
+            'page' => 'ville',
             'title'   => 'Liste des villes'
         ]);
     }
