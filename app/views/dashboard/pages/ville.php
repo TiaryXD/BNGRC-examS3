@@ -50,7 +50,6 @@
                                     <li>
                                         <i class="bi-clipboard-data text-warning"></i>
                                         <strong>Besoins :</strong>
-                                        <?= (int)$ville['nb_besoins'] ?>
                                     </li>
 
                                     <li>
