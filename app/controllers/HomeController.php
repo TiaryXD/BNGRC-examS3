@@ -21,19 +21,5 @@ class HomeController
         ]);
     }
 
-    public static function showSearch($app)
-    {
-        $app->render('home/layout', [
-            'page' => 'rechercher',
-            'title' => 'Recherche',
-        ]);
-    }
-
-    public static function showInventaire($app)
-    {
-        $app->render('home/layout', [
-            'page' => 'inventaire',
-            'title' => 'Inventaire',
-        ]);
-    }
+    
 }
