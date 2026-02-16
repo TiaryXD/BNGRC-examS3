@@ -60,30 +60,42 @@ class DonRepository
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getTotalDonsParType(): array
+    public function getTotalDonsParGenre(): array
     {
-        $sql = "SELECT t.id AS type_id, t.nom AS type_nom,
-                    COALESCE(SUM(d.quantite), 0) AS total_dons
-                FROM types t
-                LEFT JOIN dons d ON d.type_id = t.id
-                GROUP BY t.id, t.nom
-                ORDER BY t.nom";
+        $sql = "
+            SELECT
+                LOWER(TRIM(d.description)) AS don_nom,
+                d.unite,
+                SUM(d.quantite) AS total_dons
+            FROM dons d
+            GROUP BY LOWER(TRIM(d.description)), d.unite
+            ORDER BY don_nom
+        ";
 
         return $this->pdo->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function getTotalDistributionsParType(): array
+
+    public function getTotalDistributionsParGenre(): array
     {
-        $sql = "SELECT t.id AS type_id, t.nom AS type_nom,
-                    COALESCE(SUM(di.quantite), 0) AS total_distributions
-                FROM types t
-                LEFT JOIN besoins b ON b.type_id = t.id
-                LEFT JOIN distributions di ON di.besoin_id = b.id
-                GROUP BY t.id, t.nom
-                ORDER BY t.nom";
+        $sql = "
+            SELECT
+                CASE
+                WHEN LOWER(di.description) LIKE '%riz%' THEN 'riz'
+                WHEN LOWER(di.description) LIKE '%eau%' THEN 'eau'
+                ELSE LOWER(TRIM(di.description))
+                END AS don_nom,
+                b.unite AS unite,
+                COALESCE(SUM(di.quantite), 0) AS total_distributions
+            FROM distributions di
+            LEFT JOIN besoins b ON b.id = di.besoin_id
+            GROUP BY don_nom, b.unite
+            ORDER BY don_nom
+        ";
 
         return $this->pdo->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
+
 
 
 }

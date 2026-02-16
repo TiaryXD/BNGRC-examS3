@@ -166,3 +166,67 @@ JOIN besoins b ON di.besoin_id = b.id
 JOIN villes v  ON b.ville_id = v.id
 JOIN types t   ON b.type_id = t.id
 JOIN dons d    ON di.don_id = d.id;
+
+DROP VIEW IF EXISTS v_distributions_ville;
+
+CREATE VIEW v_distributions_ville AS
+SELECT
+    di.id                AS distribution_id,
+    di.description       AS distribution_description,
+    di.quantite          AS distribution_quantite,
+    di.remarque          AS distribution_remarque,
+    di.created_by        AS distribution_created_by,
+    di.date_distribution AS distribution_date,
+
+    v.id                 AS ville_id,
+    v.nom                AS ville_nom,
+
+    b.id                 AS besoin_id,
+    b.description        AS besoin_description,
+    b.unite              AS besoin_unite,
+    b.type_id            AS besoin_type_id,
+
+    t.nom                AS type_nom
+
+FROM distributions di
+JOIN besoins b ON b.id = di.besoin_id
+JOIN villes  v ON v.id = b.ville_id
+JOIN types   t ON t.id = b.type_id;
+
+INSERT INTO dons (type_id, description, quantite, unite, date_reception, source)
+VALUES
+-- Nourriture
+(1, 'Riz', 5000, 'kg', '2026-01-10', 'ONG Aide Madagascar'),
+(1, 'Riz', 2500, 'kg', '2026-01-15', 'UNICEF'),
+(1, 'Eau', 3000, 'litre', '2026-01-12', 'Croix Rouge'),
+(1, 'Eau', 1500, 'litre', '2026-01-20', 'Entreprise STAR'),
+
+-- Secours
+(1, 'Couverture', 800, 'pièce', '2026-01-18', 'ONG Humanité'),
+
+-- Matériaux
+(2, 'Tôle', 400, 'pièce', '2026-01-22', 'Ministère Habitat'),
+(2, 'Bois', 120, 'm3', '2026-01-25', 'Entreprise privée'),
+
+-- Financier
+(3, 'Aide financière', 15000000, 'Ar', '2026-01-28', 'Banque BNI');
+
+INSERT INTO distributions (besoin_id, description, quantite, remarque, created_by)
+VALUES
+-- Riz distribué
+(1, 'Riz', 2000, 'Distribution urgente', 1),
+(2, 'Riz', 1500, 'Aide familles sinistrées', 1),
+
+-- Eau
+(3, 'Eau', 1200, 'Distribution eau potable', 1),
+(3, 'Eau', 800, 'Renfort cyclone', 1),
+
+-- Couvertures
+(4, 'Couverture', 300, 'Protection nuit', 1),
+
+-- Matériaux
+(5, 'Tôle', 120, 'Réparation habitations', 1),
+(6, 'Bois', 40, 'Reconstruction', 1),
+
+-- Financier
+(7, 'Aide financière', 5000000, 'Aide directe ménages', 1);

@@ -9,30 +9,34 @@ class StatDonController
 {
     public static function getstatdon($app)
     {
-        $repo = new DonRepository;($app->db());
+        $repo = new DonRepository($app->db());
 
-        // Tous types (tableaux)
-        $totauxDonsParType = $repo->getTotalDonsParType();
-        $totauxDistribParType = $repo->getTotalDistributionsParType();
+        $totauxDonsParGenre = $repo->getTotalDonsParGenre();
+        $totauxDistribParGenre = $repo->getTotalDistributionsParGenre();
 
-        // (Optionnel) Calcul du reste par type
-        $resteParType = [];
-        foreach ($totauxDonsParType as $row) {
-            $resteParType[$row['type_nom']] = (float)$row['total_dons'];
+        $distribIndex = [];
+        foreach ($totauxDistribParGenre as $row) {
+            $key = ($row['don_nom'] ?? '') . '|' . ($row['unite'] ?? '');
+            $distribIndex[$key] = (float)($row['total_distributions'] ?? 0);
         }
-        foreach ($totauxDistribParType as $row) {
-            $type = $row['type_nom'];
-            $resteParType[$type] = ($resteParType[$type] ?? 0) - (float)$row['total_distributions'];
+
+        $resteParGenre = [];
+        foreach ($totauxDonsParGenre as $row) {
+            $key = ($row['don_nom'] ?? '') . '|' . ($row['unite'] ?? '');
+            $recus = (float)($row['total_dons'] ?? 0);
+            $distrib = (float)($distribIndex[$key] ?? 0);
+
+            $resteParGenre[$key] = $recus - $distrib;
         }
 
         $app->render('dashboard/layout', [
             'page'  => 'stat-don',
             'title' => 'Statistiques des dons',
 
-            // Tous types
-            'totaux_dons_par_type' => $totauxDonsParType,
-            'totaux_distrib_par_type' => $totauxDistribParType,
-            'reste_par_type' => $resteParType,
+            'totaux_dons_par_type' => $totauxDonsParGenre,       // (tu peux renommer en _par_genre si tu veux)
+            'totaux_distrib_par_type' => $totauxDistribParGenre, // idem
+            'reste_par_type' => $resteParGenre,                 // reste par "don_nom|unite"
         ]);
     }
+
 }
