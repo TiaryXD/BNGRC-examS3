@@ -14,10 +14,6 @@ use app\controllers\HomeController;
 
 $router->group('', function(Router $router) use ($app) {
 
-	$router->get('/', function() use ($app) {
-	    Flight::redirect('/login');
-    });
-
     $router->get('/login', function() use ($app) {
         AuthController::showLogin($app);
     });
@@ -34,7 +30,7 @@ $router->group('', function(Router $router) use ($app) {
         AuthController::logout();
     });
 
-    $router->get('/accueil', function() use ($app) {
+    $router->get('/', function() use ($app) {
         HomeController::showHome($app);
     });
 
