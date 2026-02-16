@@ -60,7 +60,7 @@ $router->group('', function(Router $router) use ($app) {
         BesoinController::showVille($app);
     });
 
-    $router->get('/villes/{id}', function($id) use ($app) {
+    $router->get('/ville/{id}', function($id) use ($app) {
         BesoinController::showVilleById($app, $id);
     });
 
