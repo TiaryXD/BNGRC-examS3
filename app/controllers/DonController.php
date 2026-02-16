@@ -13,7 +13,7 @@ class DonController
 
         $dons = $repo->get_historique();
 
-        $app->render('dons/layout', [
+        $app->render('dashboard/layout', [
             'dons'  => $dons,
             'page' => 'dons',
             'title' => 'Historique des dons'
