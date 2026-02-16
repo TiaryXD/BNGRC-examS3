@@ -6,6 +6,7 @@ use flight\net\Router;
 
 use app\controllers\AuthController;
 use app\controllers\HomeController;
+use app\controllers\BesoinController;
 
 /** 
  * @var Router $router 
