@@ -7,13 +7,13 @@ use Flight;
 
 class DonController
 {
-    public static function historique()
+    public static function historique($app)
     {
-        $repo = new DonRepository(Flight::get('db'));
+        $repo = new DonRepository($app->db());
 
         $dons = $repo->get_historique();
 
-        Flight::render('dons/layout', [
+        $app->render('dons/layout', [
             'dons'  => $dons,
             'page' => 'dons',
             'title' => 'Historique des dons'
