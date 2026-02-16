@@ -14,7 +14,7 @@ class BesoinController
      */
     public static function showBesoin($app)
     {
-        $repo = new BesoinRepository($app->getPDO());
+        $repo = new BesoinRepository($app->db());
 
         $besoins = $repo->get_besoin();
 
@@ -62,7 +62,7 @@ class BesoinController
      */
     public static function store($app)
     {
-        $repo = new BesoinRepository($app->getPDO());
+        $repo = new BesoinRepository($app->db());
 
         $villeId     = $_POST['ville_id'] ?? null;
         $typeId      = $_POST['type_id'] ?? null;
@@ -80,8 +80,8 @@ class BesoinController
         if (!$unite)       $errors['unite'] = "Unité obligatoire";
 
         if (!empty($errors)) {
-            $villeRepo = new VilleRepository($app->getPDO());
-            $typeRepo  = new TypeRepository($app->getPDO());
+            $villeRepo = new VilleRepository($app->db());
+            $typeRepo  = new TypeRepository($app->db());
 
             $app->render('dashboard/layout', [
                 'errors' => $errors,
