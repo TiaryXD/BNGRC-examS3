@@ -79,7 +79,7 @@ class BesoinController
     /**
      * Enregistrer un besoin
      */
-    public static function store($app)
+    public static function saveBesoinbyidville($app)
     {
         $repo = new BesoinRepository($app->db());
 
@@ -122,7 +122,7 @@ class BesoinController
             $remarque ?: null
         );
 
-        header("Location: /dashboard/besoin");
+        header("Location: /dashboard/ville/$villeId");
         exit;
     }
 }
