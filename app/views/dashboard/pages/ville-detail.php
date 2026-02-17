@@ -125,6 +125,20 @@ $totalDemande = count($besoin);
                 </div>
             <?php endforeach; ?>
         </div>
+    
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+
+            <a href="/ajout-besoin/<?= (int)$ville['id'] ?>"
+            class="custom-btn btn btn-warning px-4 py-2">
+
+                <i class="bi-plus-circle me-2"></i>
+                Ajouter un besoin pour cette ville
+
+            </a>
+
+        </div>
+    </div>
 
         <div class="custom-block p-4 mt-4">
 
@@ -190,19 +204,5 @@ $totalDemande = count($besoin);
         </div>
 
     <?php endif; ?>
-
-    <div class="row mt-5">
-        <div class="col-12 text-center">
-
-            <a href="/ajout-besoin/<?= (int)$ville['id'] ?>"
-            class="custom-btn btn btn-warning px-4 py-2">
-
-                <i class="bi-plus-circle me-2"></i>
-                Ajouter un besoin pour cette ville
-
-            </a>
-
-        </div>
-    </div>
     </div>
 </section>
