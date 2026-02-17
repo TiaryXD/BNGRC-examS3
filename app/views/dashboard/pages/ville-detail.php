@@ -3,7 +3,7 @@ $ville   = $ville ?? null;
 $besoin = $besoin ?? [];
 $distribution = $distribution ?? [];
 $besoins_couverture = $besoins_couverture ?? [];
-
+$montant_achats = $montant_achats ?? 0;
 
 if (!$ville) {
     echo "<p class='text-danger'>Ville introuvable.</p>";
@@ -49,6 +49,12 @@ $totalDemande = count($besoin);
                 <div class="custom-block p-3 text-center">
                     <small class="text-muted">Total besoins</small>
                     <h4><?= number_format($totalDemande,0,',',' ') ?></h4>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="custom-block p-3 text-center">
+                    <small class="text-muted">Montant total des achats</small>
+                    <h4><?= number_format($montant_achats,0,',',' ') ?></h4>
                 </div>
             </div>
         </div>

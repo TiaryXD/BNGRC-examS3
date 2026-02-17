@@ -108,6 +108,18 @@ $links = [
                         <a class="nav-link click-scroll" href="/achat">Achat</a>
                     </li>
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link click-scroll dropdown-toggle" href="#section_5"
+                            id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">Données</a>
+
+                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/stat-don">Statistiques</a></li>
+
+                            <li><a class="dropdown-item" href="/recap">Récapitulatif</a></li>
+                        </ul>
+                    </li>
+
                     <?php if (empty($user)): ?>
                         <li class="nav-item ms-3">
                             <a class="nav-link custom-btn custom-border-btn btn" href="/login">

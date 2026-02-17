@@ -30,10 +30,24 @@ class AchatRepository
         return (float) $this->pdo->query($sql)->fetchColumn();
     }
 
-    // Argent disponible = dons argent - achats
+    public function getTotalDistributionsArgent(): float
+    {
+        $sql = "
+            SELECT COALESCE(SUM(di.quantite),0)
+            FROM distributions di
+            WHERE LOWER(di.description) LIKE 'aide financière%'
+        ";
+
+        return (float)$this->pdo->query($sql)->fetchColumn();
+    }
+
+
     public function getArgentDisponible(): float
     {
-        return $this->getTotalDonsArgent() - $this->getTotalAchatsMontant();
+        return
+            $this->getTotalDonsArgent()
+            - $this->getTotalAchatsMontant()
+            - $this->getTotalDistributionsArgent();
     }
 
     // Récupérer infos d'un besoin (type + prix_unitaire + ville_id)
@@ -102,5 +116,19 @@ class AchatRepository
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getMontantAchatByVille(int $villeId): float
+    {
+        $sql = "SELECT COALESCE(SUM(montant_total),0)
+                FROM achats
+                WHERE ville_id = :ville_id";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            'ville_id' => $villeId
+        ]);
+
+        return (float)$stmt->fetchColumn();
     }
 }

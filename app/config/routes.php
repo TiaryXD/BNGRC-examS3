@@ -10,6 +10,7 @@ use app\controllers\BesoinController;
 use app\controllers\DonController;
 use app\controllers\StatDonController;
 use app\controllers\AchatController;
+use app\controllers\RecapController;
 
 /** 
  * @var Router $router 
@@ -104,4 +105,13 @@ $router->group('', function(Router $router) use ($app) {
     $router->post('/achat/ajout-achat', function() use ($app) { 
         AchatController::saveachat($app); 
     });
+
+    $router->get('/recap', function() use ($app) {
+        RecapController::show($app);
+    });
+
+    $router->get('/api/recap', function() use ($app) {
+        RecapController::api($app);
+    });
+
 }, [ SecurityHeadersMiddleware::class ]);

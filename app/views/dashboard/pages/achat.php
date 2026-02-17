@@ -34,20 +34,22 @@ if (!empty($achats[0]['date_achat'])) {
             <i class="bi-plus-circle me-2"></i> Faire un achat
           </a>
 
-          <!-- Filtre ville -->
-          <form method="GET" action="/achat" class="d-flex align-items-center gap-2">
-            <select name="ville_id" class="form-select">
+          <div class="d-flex align-items-center gap-2">
+            <select id="villeFilter" class="form-select">
               <option value="">Toutes les villes</option>
+
               <?php foreach ($villes as $v): ?>
-                <option value="<?= (int)$v['id'] ?>" <?= ((string)$selected_ville_id === (string)$v['id']) ? 'selected' : '' ?>>
-                  <?= htmlspecialchars($v['nom'] ?? '') ?>
+                <option value="<?= (int)$v['id'] ?>">
+                  <?= htmlspecialchars($v['nom']) ?>
                 </option>
               <?php endforeach; ?>
             </select>
-            <button class="btn btn-outline-secondary" type="submit">
-              <i class="bi-funnel"></i> Filtrer
+
+            <button type="button" id="resetFilter" class="btn btn-outline-secondary">
+              <i class="bi-x-circle"></i>
             </button>
-          </form>
+          </div>
+
         </div>
       </div>
     </div>
@@ -124,7 +126,7 @@ if (!empty($achats[0]['date_achat'])) {
                     // Exemple action : revenir filtré sur la même ville
                     $url = '/achat?' . http_build_query(['ville_id' => $villeId]);
                   ?>
-                  <tr>
+                  <tr data-ville="<?= (int)$villeId ?>">
                     <td><?= htmlspecialchars($a['date_achat'] ?? '') ?></td>
 
                     <td class="fw-semibold">
@@ -173,3 +175,35 @@ if (!empty($achats[0]['date_achat'])) {
 
   </div>
 </section>
+
+<script nonce="<?= formatText($cspNonce) ?>">
+document.addEventListener('DOMContentLoaded', () => {
+
+  const filter = document.getElementById('villeFilter');
+  const resetBtn = document.getElementById('resetFilter');
+  const rows = document.querySelectorAll('tbody tr');
+
+  function applyFilter() {
+    const selected = filter.value;
+
+    rows.forEach(row => {
+      const villeId = row.dataset.ville;
+
+      if (!selected || villeId === selected) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  }
+
+  filter.addEventListener('change', applyFilter);
+
+  resetBtn.addEventListener('click', () => {
+    filter.value = '';
+    applyFilter();
+  });
+
+});
+</script>
+

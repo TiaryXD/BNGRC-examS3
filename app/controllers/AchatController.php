@@ -112,7 +112,7 @@ class AchatController
             $createdBy ? (int)$createdBy : null
         );
 
-        header("Location: /dashboard/achats?ville_id={$villeId}");
+        header("Location: /achat");
         exit;
     }
 

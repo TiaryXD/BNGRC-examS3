@@ -6,6 +6,7 @@ use app\repositories\BesoinRepository;
 use app\repositories\VilleRepository;
 use app\repositories\TypeRepository;
 use app\repositories\DistributionRepository;
+use app\repositories\AchatRepository;
 use Flight;
 
 class BesoinController
@@ -42,17 +43,22 @@ class BesoinController
     public static function showVilleById($app, $id)
     {
         $repo = new VilleRepository($app->db());
-
         $ville = $repo->getVilleById((int)$id);
+
         $repo = new DistributionRepository($app->db());
         $distribution = $repo->getDistributionsByVilleId((int)$id);
+
         $besoinRepo = new BesoinRepository($app->db());
         $besoins = $besoinRepo->getBesoinsAvecResteByVille((int)$id);
+
+        $achatRepo = new AchatRepository($app->db());
+        $montantAchats = $achatRepo->getMontantAchatByVille((int)$id);
 
         $app->render('dashboard/layout', [
             'ville' => $ville,
             'besoin'=> $besoins,
             'distribution' => $distribution,
+            'montant_achats' => $montantAchats,
             'page'  => 'ville-detail',
             'title' => 'Détail de la ville'
         ]);

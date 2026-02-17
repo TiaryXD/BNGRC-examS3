@@ -36,13 +36,13 @@ class BesoinRepository
 
     public function get_besoin()
     {
-        $sql = "SELECT b.*, 
-                       v.nom AS ville_nom,
-                       t.nom AS type_nom
+        $sql = "SELECT b.id, b.ville_id, b.description, b.unite, b.prix_unitaire,
+                    t.nom AS type_nom,
+                    v.nom AS ville_nom
                 FROM besoins b
-                JOIN villes v ON b.ville_id = v.id
-                JOIN types t ON b.type_id = t.id
-                ORDER BY b.created_at DESC";
+                JOIN types t ON t.id=b.type_id
+                JOIN villes v ON v.id=b.ville_id
+                ORDER BY v.nom, t.nom, b.description";
 
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
