@@ -4,7 +4,6 @@ $villes = $villes ?? [];
 $argent_disponible = $argent_disponible ?? 0;
 $selected_ville_id = $selected_ville_id ?? null;
 
-// Stats
 $totalAchats = count($achats);
 $totalMontant = 0;
 $derniereDate = '—';
@@ -123,7 +122,6 @@ if (!empty($achats[0]['date_achat'])) {
                     $unite = $a['besoin_unite'] ?? '';
                     $villeId = $a['ville_id'] ?? null;
 
-                    // Exemple action : revenir filtré sur la même ville
                     $url = '/achat?' . http_build_query(['ville_id' => $villeId]);
                   ?>
                   <tr data-ville="<?= (int)$villeId ?>">

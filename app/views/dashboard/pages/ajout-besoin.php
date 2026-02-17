@@ -5,7 +5,6 @@ $values = $values ?? [];
 $villes = $villes ?? [];
 $types  = $types ?? [];
 
-// si tu arrives depuis /ville/@id, tu peux envoyer ville_id via GET
 $selectedVille = $values['ville_id'] ?? ($_GET['ville_id'] ?? null);
 
 function fieldInvalid($name, $errors) {

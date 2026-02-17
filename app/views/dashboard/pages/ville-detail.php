@@ -70,7 +70,7 @@ $totalDemande = count($besoin);
             <?php foreach ($besoin as $b): 
                 $quantite = (float)$b['quantite'];
                 $distrib  = (float)$b['total_distribue'];
-                $reste    = max(0, (float)$b['reste']); // sécurité
+                $reste    = max(0, (float)$b['reste']); 
                 $pct = ($quantite > 0) ? min(100, ($distrib / $quantite) * 100) : 0;
             ?>
                 <div class="col-lg-6 col-12">

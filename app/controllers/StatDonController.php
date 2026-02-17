@@ -33,9 +33,9 @@ class StatDonController
             'page'  => 'stat-don',
             'title' => 'Statistiques des dons',
 
-            'totaux_dons_par_type' => $totauxDonsParGenre,       // (tu peux renommer en _par_genre si tu veux)
-            'totaux_distrib_par_type' => $totauxDistribParGenre, // idem
-            'reste_par_type' => $resteParGenre,                 // reste par "don_nom|unite"
+            'totaux_dons_par_type' => $totauxDonsParGenre,       
+            'totaux_distrib_par_type' => $totauxDistribParGenre, 
+            'reste_par_type' => $resteParGenre,                 
         ]);
     }
 

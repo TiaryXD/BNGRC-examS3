@@ -1,8 +1,8 @@
 <?php
-// Données attendues depuis le controller
+
 $dons = $dons ?? [];
 
-// Stats simples
+
 $totalDons = count($dons);
 $totalQuantite = 0;
 

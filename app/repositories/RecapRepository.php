@@ -8,7 +8,6 @@ class RecapRepository
 
     public function getRecap(): array
     {
-        // 1) Besoins totaux & satisfaits (montant)
         $sqlBesoins = "
             SELECT
               COALESCE(SUM(
@@ -36,8 +35,6 @@ class RecapRepository
 
         $besoins = $this->pdo->query($sqlBesoins)->fetch(\PDO::FETCH_ASSOC) ?: [];
 
-        // 2) Dons reçus (montant) : Argent = quantite ; sinon quantite * prix_unitaire (par genre)
-        // genre = 1er mot (riz blanc => riz)
         $sqlDonsRecus = "
             SELECT
               COALESCE(SUM(
@@ -61,7 +58,6 @@ class RecapRepository
 
         $donsRecus = (float)$this->pdo->query($sqlDonsRecus)->fetchColumn();
 
-        // 3) Dons dispatchés (montant) = distributions valorisées par prix_unitaire du besoin
         $sqlDonsDispat = "
             SELECT
               COALESCE(SUM(
