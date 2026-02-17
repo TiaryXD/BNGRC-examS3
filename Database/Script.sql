@@ -7,7 +7,6 @@ CREATE TABLE admin (
     password VARCHAR(255) NOT NULL
 );
 
--- 2. Régions (optionnel mais utile si on veut regrouper les villes)
 CREATE TABLE regions (
     id          TINYINT AUTO_INCREMENT PRIMARY KEY,
     nom         VARCHAR(100) NOT NULL UNIQUE     -- ex: Analamanga, Atsinanana, Diana...
@@ -25,7 +24,7 @@ CREATE TABLE villes (
 -- 4. Types de dons / besoins (très recommandé)
 CREATE TABLE types (
     id          TINYINT AUTO_INCREMENT PRIMARY KEY,
-    nom         VARCHAR(50) NOT NULL UNIQUE      -- Nature, Matériaux, Argent
+    nom         VARCHAR(50) NOT NULL UNIQUE      -- Nature, Materiaux, Argent
 );
 
 -- 5. Besoins exprimés par ville
@@ -46,7 +45,7 @@ CREATE TABLE besoins (
 
     CONSTRAINT fk_besoins_type
       FOREIGN KEY (type_id) REFERENCES types(id) ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+);
 
 CREATE TABLE dons (
     id             INT AUTO_INCREMENT PRIMARY KEY,
@@ -62,7 +61,7 @@ CREATE TABLE dons (
 
     CONSTRAINT fk_dons_type
       FOREIGN KEY (type_id) REFERENCES types(id) ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+);
 
 CREATE TABLE distributions (
     id                INT AUTO_INCREMENT PRIMARY KEY,
@@ -81,7 +80,7 @@ CREATE TABLE distributions (
 
     CONSTRAINT fk_distributions_admin
       FOREIGN KEY (created_by) REFERENCES admin(id) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+);
 
 -- 1. Régions (quelques régions concernées par des catastrophes récentes ou fréquentes)
 INSERT INTO regions (nom) VALUES
@@ -98,7 +97,7 @@ INSERT INTO villes (nom, region_id, population) VALUES
 ('Mahajanga',    3,  245000),
 ('Antsiranana',  4,  130000),
 ('Toliara',      5,  180000),
-('Ambohidratrimo', 1, 150000),   -- banlieue d'Antananarivo
+('Ambohidratrimo', 1, 150000),
 ('Brickaville',  2,   35000),
 ('Marovoay',     3,   45000);
 
@@ -136,15 +135,13 @@ VALUES
 (1, 'Eau', 1500, 'litre', '2026-01-20', 'Entreprise STAR'),
 -- Secours
 (1, 'Couverture', 800, 'pièce', '2026-01-18', 'ONG Humanité'),
--- Matériaux
+-- Materiaux
 (2, 'Tôle', 400, 'pièce', '2026-01-22', 'Ministère Habitat'),
 (2, 'Bois', 120, 'm3', '2026-01-25', 'Entreprise privée'),
 -- Financier
 (3, 'Aide financière', 15000000, 'Ar', '2026-01-28', 'Banque BNI');
 
 
-ALTER TABLE besoins 
-ADD prix_unitaire DECIMAL(12,2) DEFAULT NULL;
 ALTER TABLE distributions ADD description VARCHAR(255) DEFAULT NULL;
 
 INSERT INTO distributions (besoin_id, don_id, description, quantite, remarque, created_by)
@@ -157,7 +154,7 @@ VALUES
 (3, 4, 'Eau', 800,  'Renfort cyclone', 1),
 -- Couvertures
 (4, 5, 'Couverture', 300, 'Protection nuit', 1),
--- Matériaux
+-- Materiaux
 (5, 6, 'Tôle', 120, 'Réparation habitations', 1),
 (6, 7, 'Bois', 40,  'Reconstruction', 1),
 -- Financier
@@ -190,7 +187,7 @@ SELECT
     b.created_at,
     t.nom AS type_nom,
 
-    /* Montant total du besoin (si Nature/Matériaux) */
+    /* Montant total du besoin (si Nature/Materiaux) */
     CASE
       WHEN b.prix_unitaire IS NULL THEN NULL
       ELSE (b.quantite * b.prix_unitaire)
@@ -238,13 +235,6 @@ UPDATE besoins
 SET quantite = 120000000, unite = 'Ar'
 WHERE ville_id = 2 AND type_id = 3;
 
-ALTER TABLE dons
-  ADD COLUMN is_base TINYINT(1) NOT NULL DEFAULT 0;
-
-ALTER TABLE besoins
-  ADD COLUMN is_base TINYINT(1) NOT NULL DEFAULT 0;
-
-
 
 CREATE TABLE ventes (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -263,13 +253,13 @@ CREATE TABLE ventes (
 
   CONSTRAINT fk_ventes_admin
     FOREIGN KEY (created_by) REFERENCES admin(id) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+);
 
 CREATE TABLE parametres (
   id INT AUTO_INCREMENT PRIMARY KEY,
   cle VARCHAR(80) NOT NULL UNIQUE,
   valeur VARCHAR(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+);
 
 -- valeur par défaut : 10% de réduction
 INSERT INTO parametres (cle, valeur) VALUES ('vente_reduction_pct', '10');
@@ -302,7 +292,7 @@ INSERT INTO regions (nom) VALUES
 
 INSERT INTO types (nom) VALUES
 ('Nature'),
-('Matériaux'),
+('Materiaux'),
 ('Argent');
 
 INSERT INTO villes (nom, region_id, population) VALUES
@@ -315,19 +305,13 @@ INSERT INTO villes (nom, region_id, population) VALUES
 INSERT INTO besoins
 (ville_id, type_id, description, quantite, unite, prix_unitaire, is_base, created_at)
 VALUES
-
--- ======================
--- BASE DATA (1 → 10)
--- ======================
-
--- 1
 ((SELECT id FROM villes WHERE nom='Toamasina'),
- (SELECT id FROM types WHERE nom='Matériaux'),
+ (SELECT id FROM types WHERE nom='Materiaux'),
  'Bâche',200,'pièce',15000,1,'2026-02-15'),
 
 -- 2
 ((SELECT id FROM villes WHERE nom='Nosy Be'),
- (SELECT id FROM types WHERE nom='Matériaux'),
+ (SELECT id FROM types WHERE nom='Materiaux'),
  'Tôle',40,'pièce',25000,1,'2026-02-15'),
 
 -- 3
@@ -347,7 +331,7 @@ VALUES
 
 -- 6
 ((SELECT id FROM villes WHERE nom='Mananjary'),
- (SELECT id FROM types WHERE nom='Matériaux'),
+ (SELECT id FROM types WHERE nom='Materiaux'),
  'Tôle',80,'pièce',25000,1,'2026-02-15'),
 
 -- 7
@@ -357,7 +341,7 @@ VALUES
 
 -- 8
 ((SELECT id FROM villes WHERE nom='Farafangana'),
- (SELECT id FROM types WHERE nom='Matériaux'),
+ (SELECT id FROM types WHERE nom='Materiaux'),
  'Bâche',150,'pièce',15000,1,'2026-02-16'),
 
 -- 9
@@ -369,10 +353,6 @@ VALUES
 ((SELECT id FROM villes WHERE nom='Farafangana'),
  (SELECT id FROM types WHERE nom='Argent'),
  'Argent',8000000,'Ar',1,1,'2026-02-16'),
-
--- ======================
--- DONNÉES NORMALES (is_base = 0)
--- ======================
 
 -- 11
 ((SELECT id FROM villes WHERE nom='Morondava'),
@@ -396,12 +376,12 @@ VALUES
 
 -- 15
 ((SELECT id FROM villes WHERE nom='Morondava'),
- (SELECT id FROM types WHERE nom='Matériaux'),
+ (SELECT id FROM types WHERE nom='Materiaux'),
  'Bâche',180,'pièce',15000,0,'2026-02-16'),
 
 -- 16
 ((SELECT id FROM villes WHERE nom='Toamasina'),
- (SELECT id FROM types WHERE nom='Matériaux'),
+ (SELECT id FROM types WHERE nom='Materiaux'),
  'Groupe électrogène',3,'pièce',6750000,0,'2026-02-15'),
 
 -- 17
@@ -416,7 +396,7 @@ VALUES
 
 -- 19
 ((SELECT id FROM villes WHERE nom='Mananjary'),
- (SELECT id FROM types WHERE nom='Matériaux'),
+ (SELECT id FROM types WHERE nom='Materiaux'),
  'Clous',60,'kg',8000,0,'2026-02-16'),
 
 -- 20
@@ -431,17 +411,17 @@ VALUES
 
 -- 22
 ((SELECT id FROM villes WHERE nom='Morondava'),
- (SELECT id FROM types WHERE nom='Matériaux'),
+ (SELECT id FROM types WHERE nom='Materiaux'),
  'Bois',150,'pièce',10000,0,'2026-02-15'),
 
 -- 23
 ((SELECT id FROM villes WHERE nom='Toamasina'),
- (SELECT id FROM types WHERE nom='Matériaux'),
+ (SELECT id FROM types WHERE nom='Materiaux'),
  'Tôle',120,'pièce',25000,0,'2026-02-16'),
 
 -- 24
 ((SELECT id FROM villes WHERE nom='Nosy Be'),
- (SELECT id FROM types WHERE nom='Matériaux'),
+ (SELECT id FROM types WHERE nom='Materiaux'),
  'Clous',30,'kg',8000,0,'2026-02-16'),
 
 -- 25
@@ -451,16 +431,12 @@ VALUES
 
 -- 26
 ((SELECT id FROM villes WHERE nom='Farafangana'),
- (SELECT id FROM types WHERE nom='Matériaux'),
+ (SELECT id FROM types WHERE nom='Materiaux'),
  'Bois',100,'pièce',10000,0,'2026-02-15');
 
 INSERT INTO dons
 (type_id, description, quantite, unite, date_reception, source, remarque, is_base, created_at)
 VALUES
-
--- ======================
--- BASE DATA (1 → 10) is_base = 1
--- ======================
 
 -- 1
 ((SELECT id FROM types WHERE nom='Argent' LIMIT 1),
@@ -491,27 +467,23 @@ VALUES
  'Eau', 600, 'L', '2026-02-16', NULL, NULL, 1, '2026-02-16 08:00:00'),
 
 -- 8
-((SELECT id FROM types WHERE nom='Matériaux' LIMIT 1),
+((SELECT id FROM types WHERE nom='Materiaux' LIMIT 1),
  'Tôle', 50, 'pièce', '2026-02-17', NULL, NULL, 1, '2026-02-17 08:00:00'),
 
 -- 9
-((SELECT id FROM types WHERE nom='Matériaux' LIMIT 1),
+((SELECT id FROM types WHERE nom='Materiaux' LIMIT 1),
  'Bâche', 70, 'pièce', '2026-02-17', NULL, NULL, 1, '2026-02-17 08:00:00'),
 
 -- 10
 ((SELECT id FROM types WHERE nom='Nature' LIMIT 1),
  'Haricots', 100, 'kg', '2026-02-17', NULL, NULL, 1, '2026-02-17 08:00:00'),
 
--- ======================
--- DONNÉES NORMALES (11 → fin) is_base = 0
--- ======================
-
 -- 11
 ((SELECT id FROM types WHERE nom='Nature' LIMIT 1),
  'Riz', 2000, 'kg', '2026-02-18', NULL, NULL, 0, '2026-02-18 08:00:00'),
 
 -- 12
-((SELECT id FROM types WHERE nom='Matériaux' LIMIT 1),
+((SELECT id FROM types WHERE nom='Materiaux' LIMIT 1),
  'Tôle', 300, 'pièce', '2026-02-18', NULL, NULL, 0, '2026-02-18 08:00:00'),
 
 -- 13
@@ -523,7 +495,7 @@ VALUES
  'Argent', 20000000, 'Ar', '2026-02-19', NULL, NULL, 0, '2026-02-19 08:00:00'),
 
 -- 15
-((SELECT id FROM types WHERE nom='Matériaux' LIMIT 1),
+((SELECT id FROM types WHERE nom='Materiaux' LIMIT 1),
  'Bâche', 500, 'pièce', '2026-02-19', NULL, NULL, 0, '2026-02-19 08:00:00'),
 
 -- 16
