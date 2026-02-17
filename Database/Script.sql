@@ -108,7 +108,6 @@ DELETE FROM villes WHERE nom IN ('Ambohidratrimo');
 CREATE VIEW v_distributions_ville AS
 SELECT
     di.id                AS distribution_id,
-    di.description       AS distribution_description,
     di.quantite          AS distribution_quantite,
     di.remarque          AS distribution_remarque,
     di.created_by        AS distribution_created_by,
