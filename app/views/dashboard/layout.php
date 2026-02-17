@@ -104,6 +104,10 @@ $links = [
                         <a class="nav-link click-scroll" href="/stat-don">Statistiques</a>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="/achat">Achat</a>
+                    </li>
+
                     <?php if (empty($user)): ?>
                         <li class="nav-item ms-3">
                             <a class="nav-link custom-btn custom-border-btn btn" href="/login">

@@ -77,7 +77,7 @@ return [
 		'host'     => '127.0.0.1',
 		'dbname'   => 'BNGRC',
 		'user'     => 'root',
-		'password' => '',
+		'password' => 'itu16',
 
 		// SQLite Example:
 		// 'file_path' => __DIR__ . $ds . '..' . $ds . 'database.sqlite', // Path to SQLite file

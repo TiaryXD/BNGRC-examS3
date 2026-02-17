@@ -23,7 +23,7 @@ class AchatController
             'argent_disponible' => $achatRepo->getArgentDisponible(),
             'errors' => [],
             'values' => [],
-            'page' => 'form-achat',
+            'page' => 'ajout-achat',
             'title' => 'Faire un achat'
         ]);
     }
@@ -93,7 +93,7 @@ class AchatController
                 'argent_disponible' => $argentDisponible,
                 'errors' => $errors,
                 'values' => $_POST,
-                'page' => 'ajout-achat',
+                'page' => 'form-achat',
                 'title' => 'Faire un achat'
             ]);
             return;

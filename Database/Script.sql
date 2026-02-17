@@ -120,13 +120,13 @@ INSERT INTO besoins (ville_id, type_id, description, quantite, unite, remarque, 
 
 -- 5. Dons reçus (stock disponible au moment du test)
 INSERT INTO dons (type_id, description, quantite, unite, date_reception, source, remarque, created_at) VALUES
-(1, 'Riz blanc 50kg/sac – don entreprise',  500.00,  'sac 50kg', '2025-02-01', 'Entreprise SOCITA', 'Don important pour Toamasina', '2025-02-02'),
-(1, 'Riz – collecte église',                 4200.00, 'kg',      '2025-01-28', 'Communauté chrétienne Tana', NULL, '2025-01-29'),
-(1, 'Huile 5L bidons',                       680.00,  'bidon',   '2025-02-03', 'Particuliers', NULL, '2025-02-04'),
-(2, 'Tôle ondulée 3m – don ONG',             320.00,  'pièce',   '2025-02-02', 'ONG Habitat pour Tous', 'Livraison prévue semaine 7', '2025-02-03'),
-(2, 'Clous assortis',                        450.00,  'kg',      '2025-01-30', ' quincaillerie partenaire', NULL, '2025-01-31'),
-(3, 'Virement bancaire secours',             75000000.00, 'Ar',  '2025-02-04', 'Diaspora', 'Fonds d’urgence cyclone', '2025-02-05'),
-(3, 'Collecte SMS – Orange Money',           32000000.00, 'Ar',  '2025-01-25', 'Campagne nationale', NULL, '2025-01-26');
+(1, 'Riz blanc 50kg/sac – don entreprise',  500.00, 'sac 50kg', '2025-02-01', 'Entreprise SOCITA', 'Don important pour Toamasina', '2025-02-02'),
+(1, 'Riz – collecte église', 4200.00, 'kg','2025-01-28', 'Communauté chrétienne Tana', NULL, '2025-01-29'),
+(1, 'Huile 5L bidons', 680.00,'bidon', '2025-02-03', 'Particuliers', NULL, '2025-02-04'),
+(2, 'Tôle ondulée 3m – don ONG', 320.00,  'pièce','2025-02-02', 'ONG Habitat pour Tous', 'Livraison prévue semaine 7', '2025-02-03'),
+(2, 'Clous assortis', 450.00,  'kg','2025-01-30', ' quincaillerie partenaire', NULL, '2025-01-31'),
+(3, 'Virement bancaire secours', 75000000.00, 'Ar','2025-02-04', 'Diaspora', 'Fonds d’urgence cyclone', '2025-02-05'),
+(3, 'Collecte SMS – Orange Money', 32000000.00, 'Ar','2025-01-25', 'Campagne nationale', NULL, '2025-01-26');
 
 -- 6. Quelques distributions déjà effectuées (exemples)
 -- On distribue une partie des dons vers des besoins existants
@@ -211,25 +211,45 @@ VALUES
 -- Financier
 (3, 'Aide financière', 15000000, 'Ar', '2026-01-28', 'Banque BNI');
 
-INSERT INTO distributions (besoin_id, description, quantite, remarque, created_by)
-VALUES
--- Riz distribué
-(1, 'Riz', 2000, 'Distribution urgente', 1),
-(2, 'Riz', 1500, 'Aide familles sinistrées', 1),
-
--- Eau
-(3, 'Eau', 1200, 'Distribution eau potable', 1),
-(3, 'Eau', 800, 'Renfort cyclone', 1),
-
--- Couvertures
-(4, 'Couverture', 300, 'Protection nuit', 1),
-
--- Matériaux
-(5, 'Tôle', 120, 'Réparation habitations', 1),
-(6, 'Bois', 40, 'Reconstruction', 1),
-
--- Financier
-(7, 'Aide financière', 5000000, 'Aide directe ménages', 1);
 
 ALTER TABLE besoins 
 ADD prix_unitaire DECIMAL(12,2) DEFAULT NULL;
+ALTER TABLE distributions
+
+ADD description VARCHAR(255) DEFAULT NULL;
+INSERT INTO distributions (besoin_id, don_id, description, quantite, remarque, created_by)
+VALUES
+-- Riz distribué
+(1, 1, 'Riz', 2000, 'Distribution urgente', 1),
+(2, 2, 'Riz', 1500, 'Aide familles sinistrées', 1),
+
+-- Eau
+(3, 3, 'Eau', 1200, 'Distribution eau potable', 1),
+(3, 4, 'Eau', 800,  'Renfort cyclone', 1),
+
+-- Couvertures
+(4, 5, 'Couverture', 300, 'Protection nuit', 1),
+
+-- Matériaux
+(5, 6, 'Tôle', 120, 'Réparation habitations', 1),
+(6, 7, 'Bois', 40,  'Reconstruction', 1),
+
+-- Financier
+(7, 8, 'Aide financière', 5000000, 'Aide directe ménages', 1);
+
+
+CREATE TABLE achats (
+    id              INT AUTO_INCREMENT PRIMARY KEY,
+    ville_id         INT NOT NULL,
+    besoin_id        INT NOT NULL,
+    quantite         DECIMAL(12,2) NOT NULL,
+    prix_unitaire    DECIMAL(12,2) NOT NULL,
+    montant_total    DECIMAL(12,2) NOT NULL,
+    remarque         TEXT DEFAULT NULL,
+    created_by       INT DEFAULT NULL,
+    date_achat       DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (ville_id)   REFERENCES villes(id)  ON DELETE CASCADE,
+    FOREIGN KEY (besoin_id)  REFERENCES besoins(id) ON DELETE RESTRICT,
+    FOREIGN KEY (created_by) REFERENCES admin(id)   ON DELETE SET NULL
+);

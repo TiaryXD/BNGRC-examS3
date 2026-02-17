@@ -9,6 +9,7 @@ use app\controllers\HomeController;
 use app\controllers\BesoinController;
 use app\controllers\DonController;
 use app\controllers\StatDonController;
+use app\controllers\AchatController;
 
 /** 
  * @var Router $router 
@@ -94,5 +95,13 @@ $router->group('', function(Router $router) use ($app) {
     $router->post('/distribuer/save', function() use ($app) {
         DonController::saveDistribution($app);
     });
-
+    $router->get('/achat', function() use ($app) { 
+        AchatController::getlisteachat($app);
+    }); 
+    $router->get('/achat/form-achat', function() use ($app) { 
+        AchatController::formAchat($app); 
+    }); 
+    $router->post('/achat/ajout-achat', function() use ($app) { 
+        AchatController::saveachat($app); 
+    });
 }, [ SecurityHeadersMiddleware::class ]);
