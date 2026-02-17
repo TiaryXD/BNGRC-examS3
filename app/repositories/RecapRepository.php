@@ -80,4 +80,23 @@ class RecapRepository
             'dons_dispatches_montant'    => (float)$donsDispatches,
         ];
     }
+
+    public function resetKeepBaseOnly(): void
+    {
+        $this->pdo->beginTransaction();
+
+        try {
+            $this->pdo->exec("DELETE FROM distributions");
+            $this->pdo->exec("DELETE FROM achats");
+
+            $this->pdo->exec("DELETE FROM dons WHERE is_base = 0");
+            $this->pdo->exec("DELETE FROM besoins WHERE is_base = 0");
+
+            $this->pdo->commit();
+        } catch (\Throwable $e) {
+            $this->pdo->rollBack();
+            throw $e;
+        }
+    }
+
 }

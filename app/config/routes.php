@@ -11,6 +11,7 @@ use app\controllers\DonController;
 use app\controllers\StatDonController;
 use app\controllers\AchatController;
 use app\controllers\RecapController;
+use app\controllers\VenteController;
 
 /** 
  * @var Router $router 
@@ -113,5 +114,17 @@ $router->group('', function(Router $router) use ($app) {
     $router->get('/api/recap', function() use ($app) {
         RecapController::api($app);
     });
+
+    $router->post('/api/reset-data', function() use ($app) {
+        RecapController::resetData($app);
+    });
+
+    $router->get('/vente', function() use ($app) {
+         VenteController::showVente($app);
+    });
+    $router->post('/vente', function() use ($app) {
+         VenteController::saveVente($app);
+    });
+
 
 }, [ SecurityHeadersMiddleware::class ]);

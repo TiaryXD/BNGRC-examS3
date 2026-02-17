@@ -31,6 +31,11 @@ $pourDons    = ($dr > 0) ? min(100, ($dd / $dr) * 100) : 0;
       <button id="btnRefresh" class="custom-btn btn">
         <i class="bi-arrow-clockwise me-1"></i> Actualiser
       </button>
+
+      <a href="#" id="resetLink" class="btn btn-outline-danger">
+        <i class="bi-trash3 me-1"></i> Réinitialiser
+      </a>
+
     </div>
 
     <div id="recapAlert" class="alert d-none"></div>
@@ -88,71 +93,5 @@ $pourDons    = ($dr > 0) ? min(100, ($dd / $dr) * 100) : 0;
   </div>
 </section>
 
-<script nonce="<?= formatText($cspNonce) ?>">
-document.addEventListener('DOMContentLoaded', () => {
-  const btn = document.getElementById('btnRefresh');
-  const alertBox = document.getElementById('recapAlert');
+<script src="/assets/js/recap.js" nonce="<?= formatText($cspNonce) ?>"></script>
 
-  const el = {
-    bt: document.getElementById('besoinsTotal'),
-    bs: document.getElementById('besoinsSatisfaits'),
-    bp: document.getElementById('besoinsPct'),
-    bb: document.getElementById('besoinsBar'),
-
-    dr: document.getElementById('donsRecus'),
-    dd: document.getElementById('donsDispatches'),
-    dp: document.getElementById('donsPct'),
-    db: document.getElementById('donsBar'),
-  };
-
-  function ar(n){
-    return Math.round(n).toLocaleString('fr-FR') + ' Ar';
-  }
-
-  function showAlert(type, msg){
-    alertBox.className = 'alert alert-' + type;
-    alertBox.textContent = msg;
-    alertBox.classList.remove('d-none');
-    setTimeout(() => alertBox.classList.add('d-none'), 2500);
-  }
-
-  btn.addEventListener('click', async () => {
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Actualisation...';
-
-    try {
-      const res = await fetch('/api/recap', { headers: { 'Accept': 'application/json' } });
-      const json = await res.json();
-      if (!json.ok) throw new Error('Réponse invalide');
-
-      const d = json.data;
-
-      const bt = Number(d.besoins_total_montant || 0);
-      const bs = Number(d.besoins_satisfaits_montant || 0);
-      const dr = Number(d.dons_recus_montant || 0);
-      const dd = Number(d.dons_dispatches_montant || 0);
-
-      const pctB = bt > 0 ? Math.min(100, (bs / bt) * 100) : 0;
-      const pctD = dr > 0 ? Math.min(100, (dd / dr) * 100) : 0;
-
-      el.bt.textContent = ar(bt);
-      el.bs.textContent = ar(bs);
-      el.bp.textContent = pctB.toFixed(1).replace('.', ',') + '%';
-      el.bb.style.width = pctB + '%';
-
-      el.dr.textContent = ar(dr);
-      el.dd.textContent = ar(dd);
-      el.dp.textContent = pctD.toFixed(1).replace('.', ',') + '%';
-      el.db.style.width = pctD + '%';
-
-      showAlert('success', 'Récap mis à jour.');
-    } catch (e) {
-      console.error(e);
-      showAlert('danger', 'Erreur lors de l’actualisation.');
-    } finally {
-      btn.disabled = false;
-      btn.innerHTML = '<i class="bi-arrow-clockwise me-1"></i> Actualiser';
-    }
-  });
-});
-</script>

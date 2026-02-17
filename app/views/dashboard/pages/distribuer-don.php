@@ -13,14 +13,6 @@ function invalid($k, $errors){ return !empty($errors[$k]) ? 'is-invalid' : ''; }
 $selectedVille = $values['ville_id'] ?? '';
 $selectedBesoin = $values['besoin_id'] ?? '';
 ?>
-<?php
-if (empty($_SESSION['user'])): ?>
-  <div class="alert alert-warning">
-    Accès réservé aux administrateurs.
-    <a href="/login" class="alert-link">Se connecter</a>
-  </div>
-  <?php return; ?>
-<?php endif; ?>
 
 <section class="section-padding">
   <div class="container">

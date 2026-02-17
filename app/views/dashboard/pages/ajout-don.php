@@ -7,14 +7,6 @@ function fieldInvalid($name, $errors) {
   return !empty($errors[$name]) ? 'is-invalid' : '';
 }
 ?>
-<?php
-if (empty($_SESSION['user'])): ?>
-  <div class="alert alert-warning">
-    Accès réservé aux administrateurs.
-    <a href="/login" class="alert-link">Se connecter</a>
-  </div>
-  <?php return; ?>
-<?php endif; ?>
 
 <section class="section-padding">
   <div class="container">

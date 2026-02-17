@@ -28,4 +28,18 @@ class RecapController
             'data' => $repo->getRecap()
         ]);
     }
+
+    public static function resetData($app)
+    {
+        header('Content-Type: application/json');
+
+        try {
+            $repo = new \app\repositories\RecapRepository($app->db());
+            $repo->resetKeepBaseOnly();
+            Flight::json(['ok' => true]);
+        } catch (\Throwable $e) {
+            Flight::json(['ok' => false, 'error' => $e->getMessage()], 500);
+        }
+    }
+
 }

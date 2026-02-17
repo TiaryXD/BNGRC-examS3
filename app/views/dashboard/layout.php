@@ -130,6 +130,13 @@ $currentPage = $_SERVER['REQUEST_URI'];
                                 </a>
                             </li>
 
+                            <li>
+                                <a class="dropdown-item <?= (strpos($currentPage, '/recap') !== false) ? 'active' : '' ?>" 
+                                href="/vente">
+                                Vente de dons
+                                </a>
+                            </li>
+
                         </ul>
                     </li>
 
@@ -175,6 +182,13 @@ $currentPage = $_SERVER['REQUEST_URI'];
                         <li class="footer-menu-item"><a href="/ville" class="footer-menu-link">Villes</a></li>
 
                         <li class="footer-menu-item"><a href="/dons" class="footer-menu-link">Dons</a></li>
+
+                        <li class="footer-menu-item"><a href="/achat" class="footer-menu-link">Achat</a></li>
+
+                        <li class="footer-menu-item"><a href="/stat-don" class="footer-menu-link">Statistiques</a></li>
+
+                        <li class="footer-menu-item"><a href="/recap" class="footer-menu-link">Récapitulatif</a></li>
+
                     </ul>
                 </div>
 

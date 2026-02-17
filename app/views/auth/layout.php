@@ -17,7 +17,7 @@
   <title>BNGRC | <?= htmlspecialchars($title) ?></title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="/assets/images/logo.png" />
 
   <link rel="stylesheet" href="/assets/icons/bootstrap-icons.min.css" />
   <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />

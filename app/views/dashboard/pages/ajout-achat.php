@@ -6,15 +6,6 @@ $errors = $errors ?? [];
 $values = $values ?? [];
 ?>
 
-<?php
-if (empty($_SESSION['user'])): ?>
-  <div class="alert alert-warning">
-    Accès réservé aux administrateurs.
-    <a href="/login" class="alert-link">Se connecter</a>
-  </div>
-  <?php return; ?>
-<?php endif; ?>
-
 <section class="section-padding" data-argent-disponible="<?= (float)$argent_disponible ?>">
   <div class="container">
 
