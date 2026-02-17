@@ -167,3 +167,59 @@ CREATE TABLE achats (
     FOREIGN KEY (besoin_id)  REFERENCES besoins(id) ON DELETE RESTRICT,
     FOREIGN KEY (created_by) REFERENCES admin(id)   ON DELETE SET NULL
 );
+CREATE OR REPLACE VIEW v_besoins_couverture AS
+SELECT
+    b.id,
+    b.ville_id,
+    b.type_id,
+    b.description,
+    b.quantite,
+    b.unite,
+    b.prix_unitaire,
+    b.remarque,
+    b.created_at,
+    t.nom AS type_nom,
+
+    /* Montant total du besoin (si Nature/Matériaux) */
+    CASE
+      WHEN b.prix_unitaire IS NULL THEN NULL
+      ELSE (b.quantite * b.prix_unitaire)
+    END AS montant_total,
+
+    /* Montant couvert via achats */
+    COALESCE((
+        SELECT SUM(a.montant_total)
+        FROM achats a
+        WHERE a.besoin_id = b.id
+    ), 0) AS montant_achete,
+
+    /* Montant restant */
+    CASE
+      WHEN b.prix_unitaire IS NULL THEN NULL
+      ELSE GREATEST(
+        (b.quantite * b.prix_unitaire) - COALESCE((
+            SELECT SUM(a.montant_total)
+            FROM achats a
+            WHERE a.besoin_id = b.id
+        ), 0),
+        0
+      )
+    END AS montant_restant,
+
+    /* % couverture */
+    CASE
+      WHEN b.prix_unitaire IS NULL THEN NULL
+      WHEN (b.quantite * b.prix_unitaire) <= 0 THEN 0
+      ELSE ROUND(
+        (
+          COALESCE((
+              SELECT SUM(a.montant_total)
+              FROM achats a
+              WHERE a.besoin_id = b.id
+          ), 0) / (b.quantite * b.prix_unitaire)
+        ) * 100
+      , 2)
+    END AS couverture_pct
+
+FROM besoins b
+JOIN types t ON t.id = b.type_id;

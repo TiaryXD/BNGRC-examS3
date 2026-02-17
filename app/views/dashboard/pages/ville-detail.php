@@ -2,6 +2,8 @@
 $ville   = $ville ?? null;
 $besoin = $besoin ?? [];
 $distribution = $distribution ?? [];
+$besoins_couverture = $besoins_couverture ?? [];
+
 
 if (!$ville) {
     echo "<p class='text-danger'>Ville introuvable.</p>";
