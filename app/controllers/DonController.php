@@ -23,7 +23,6 @@ class DonController
         ]);
     }
 
-    // Afficher le formulaire d'ajout de don
     public static function createdon($app)
     {
         $typeRepo = new TypeRepository($app->db());
@@ -35,7 +34,6 @@ class DonController
         ]);
     }
 
-    // Enregistrer un don
     public static function savedon($app)
     {
         $repo = new DonRepository($app->db());
@@ -85,7 +83,6 @@ class DonController
 
     public function getRestePourDon(string $donNom, string $unite): float
     {
-        // total reçu (dons)
         $sqlRecus = "
         SELECT COALESCE(SUM(quantite),0) AS total
         FROM dons
@@ -96,7 +93,6 @@ class DonController
         $st->execute([':don' => $donNom, ':unite' => $unite]);
         $recus = (float)$st->fetch(\PDO::FETCH_ASSOC)['total'];
 
-        // total distribué (distributions)
         $sqlDistrib = "
         SELECT COALESCE(SUM(quantite),0) AS total
         FROM distributions
@@ -125,7 +121,7 @@ class DonController
         $donRepo = new DonRepository($app->db());
         $resteStock = $donRepo->getRestePourDon($donNom, $unite);
         $typeRepo = new TypeRepository($app->db());
-        $typeId = $typeRepo->getTypeIdForDon($donNom); // Nature/Argent/Matériaux
+        $typeId = $typeRepo->getTypeIdForDon($donNom);  
 
         $villeRepo = new VilleRepository($app->db());
         $besoinRepo = new BesoinRepository($app->db());

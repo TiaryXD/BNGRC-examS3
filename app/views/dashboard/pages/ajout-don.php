@@ -2,8 +2,7 @@
 $errors = $errors ?? [];
 $values = $values ?? [];
 
-$types = $types ?? []; // attendu depuis le controller
-
+$types = $types ?? []; 
 function fieldInvalid($name, $errors) {
   return !empty($errors[$name]) ? 'is-invalid' : '';
 }

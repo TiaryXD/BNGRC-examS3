@@ -12,7 +12,6 @@ class AchatRepository
     {
         $this->pdo = $pdo;
     }
-    // Total dons Argent (en montant)
     public function getTotalDonsArgent(): float
     {
         $sql = "SELECT COALESCE(SUM(d.quantite), 0) AS total
@@ -22,7 +21,6 @@ class AchatRepository
         return (float) $this->pdo->query($sql)->fetchColumn();
     }
 
-    // Total achats (en montant_total)
     public function getTotalAchatsMontant(): float
     {
         $sql = "SELECT COALESCE(SUM(a.montant_total), 0) AS total
@@ -50,7 +48,6 @@ class AchatRepository
             - $this->getTotalDistributionsArgent();
     }
 
-    // Récupérer infos d'un besoin (type + prix_unitaire + ville_id)
     public function getBesoinInfo(int $besoinId): ?array
     {
         $sql = "SELECT b.id, b.ville_id, b.type_id, b.description, b.prix_unitaire, b.unite,
@@ -92,7 +89,6 @@ class AchatRepository
         return (int) $this->pdo->lastInsertId();
     }
 
-    // Liste achats (filtre ville optionnel)
     public function get_achats(?int $villeId = null): array
     {
         $sql = "SELECT a.*,

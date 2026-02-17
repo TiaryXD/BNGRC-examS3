@@ -43,7 +43,6 @@ class AchatController
         if (!$besoinId) $errors['besoin_id'] = "Besoin obligatoire";
         if ($quantite <= 0) $errors['quantite'] = "Quantité invalide";
 
-        // Charger info besoin
         $besoinInfo = null;
         if ($besoinId) {
             $besoinInfo = $achatRepo->getBesoinInfo($besoinId);
@@ -52,7 +51,6 @@ class AchatController
             }
         }
 
-        // Règles V2 : achat seulement pour Nature/Matériaux + prix obligatoire
         if ($besoinInfo) {
             $typeNom = $besoinInfo['type_nom'];
             $prixUnitaire = $besoinInfo['prix_unitaire'];
@@ -65,13 +63,11 @@ class AchatController
                 $errors['prix_unitaire'] = "Prix unitaire manquant pour ce besoin";
             }
 
-            // Cohérence ville (optionnel mais très propre)
             if ($villeId && (int)$besoinInfo['ville_id'] !== (int)$villeId) {
                 $errors['ville_id'] = "Ce besoin n'appartient pas à la ville sélectionnée";
             }
         }
 
-        // Calcul montant + contrôle argent disponible
         $montantTotal = 0.0;
         $argentDisponible = $achatRepo->getArgentDisponible();
 
@@ -99,7 +95,6 @@ class AchatController
             return;
         }
 
-        // created_by (si tu as une session admin)
         $createdBy = $_SESSION['admin_id'] ?? null;
 
         $achatRepo->insert_achat(
@@ -116,7 +111,6 @@ class AchatController
         exit;
     }
 
-    // Liste achats (filtre ville)
     public static function getlisteachat($app)
     {
         $achatRepo = new AchatRepository($app->db());
