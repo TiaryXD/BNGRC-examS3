@@ -8,8 +8,6 @@ $besoins = $besoins ?? [];
 $errors = $errors ?? [];
 $values = $values ?? [];
 
-var_dump($errors);
-
 function invalid($k, $errors){ return !empty($errors[$k]) ? 'is-invalid' : ''; }
 
 $selectedVille = $values['ville_id'] ?? '';

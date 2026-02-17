@@ -23,7 +23,7 @@ $links = [
     <title>BNGRC | <?= $title ?></title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="/assets/images/logo.png" />
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-icons.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/templatemo-kind-heart-charity.css" />
@@ -89,27 +89,27 @@ $links = [
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="/">Accueil</a>
+                        <a class="nav-link" href="/">Accueil</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="/ville">Villes</a>
+                        <a class="nav-link" href="/ville">Villes</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="/dons">Dons</a>
+                        <a class="nav-link" href="/dons">Dons</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="/stat-don">Statistiques</a>
+                        <a class="nav-link" href="/stat-don">Statistiques</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="/achat">Achat</a>
+                        <a class="nav-link" href="/achat">Achat</a>
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link click-scroll dropdown-toggle" href="#section_5"
+                        <a class="nav-link dropdown-toggle" href="#section_5"
                             id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">Données</a>
 
