@@ -13,9 +13,7 @@ if(!isset($_SESSION['user'])) {
 
 $cspNonce = Flight::get('csp_nonce');
 
-$links = [
-    ['href' => '/accueil', 'label' => 'Accueil']
-];
+$currentPage = $_SERVER['REQUEST_URI'];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -89,36 +87,52 @@ $links = [
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Accueil</a>
+                        <a class="nav-link <?= ($currentPage == '/') ? 'active' : '' ?>" href="/">Accueil</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/ville">Villes</a>
+                        <a class="nav-link <?= (strpos($currentPage, '/ville') !== false) ? 'active' : '' ?>" href="/ville">Villes</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/dons">Dons</a>
+                        <a class="nav-link <?= (strpos($currentPage, '/dons') !== false) ? 'active' : '' ?>" href="/dons">Dons</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/stat-don">Statistiques</a>
+                        <a class="nav-link <?= (strpos($currentPage, '/achat') !== false) ? 'active' : '' ?>" href="/achat">Achat</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="/achat">Achat</a>
-                    </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#section_5"
-                            id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">Données</a>
+                        <a class="nav-link dropdown-toggle 
+                            <?= (strpos($currentPage, '/stat-don') !== false || strpos($currentPage, '/recap') !== false) ? 'active' : '' ?>"
+                            href="#"
+                            id="navbarLightDropdownMenuLink"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Données
+                        </a>
 
                         <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                            <li><a class="dropdown-item" href="/stat-don">Statistiques</a></li>
+                            
+                            <li>
+                                <a class="dropdown-item <?= (strpos($currentPage, '/stat-don') !== false) ? 'active' : '' ?>" 
+                                href="/stat-don">
+                                Statistiques
+                                </a>
+                            </li>
 
-                            <li><a class="dropdown-item" href="/recap">Récapitulatif</a></li>
+                            <li>
+                                <a class="dropdown-item <?= (strpos($currentPage, '/recap') !== false) ? 'active' : '' ?>" 
+                                href="/recap">
+                                Récapitulatif
+                                </a>
+                            </li>
+
                         </ul>
                     </li>
+
 
                     <?php if (empty($user)): ?>
                         <li class="nav-item ms-3">
